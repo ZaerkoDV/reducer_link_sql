@@ -1,0 +1,5 @@
+#org.springsource.ide.eclipse.gradle.core.preferences.GradleProjectPreferences
+#Wed Sep 28 11:09:14 MSK 2016
+build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;reducerlink-controller;reducerlink-dao;reducerlink-model;reducerlink-service;
+org.springsource.ide.eclipse.gradle.linkedresources=
+org.springsource.ide.eclipse.gradle.rootprojectloc=
