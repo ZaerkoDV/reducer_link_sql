@@ -1,1 +1,0 @@
-include 'reducerlink-model', 'reducerlink-dao', 'reducerlink-service', 'reducerlink-controller'

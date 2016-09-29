@@ -1,0 +1,57 @@
+buildscript {
+    ext {
+        grettyVersion = '1.4.0'
+        mysqlConnectorVersion = '5.1.38'
+		postgresqlConnectorVersion = '9.0-801.jdbc4'
+		outputWarVersion = '0.0.1'
+		springBootVersion = '1.3.3.RELEASE'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath files('liquibase-lib/liquibase-3.4.2.jar')
+        classpath files('liquibase-lib/liquibase-groovy-dsl-1.2.1.jar')
+        classpath files('liquibase-lib/liquibase-gradle-plugin-1.2.1.jar')
+        classpath group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'org.liquibase.gradle'
+
+liquibase {
+    // use "clearChecksums" task in case of "Unexpected error running Liquibase: Validation Failed"
+
+    activities {
+        main {
+            changeLogFile 'db/main/master.groovy'
+            url project.dbUrl
+            username project.dbUsername
+            password project.dbPassword
+        }
+
+        dev {
+            changeLogFile 'db/dev/master.groovy'
+            url project.dbUrl
+            username project.dbUsername
+            password project.dbPassword
+        }
+    }
+
+    runList = 'main'
+}
+
+task updateDev << {
+    liquibase.runList = 'main, dev'
+    tasks.update.execute()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}

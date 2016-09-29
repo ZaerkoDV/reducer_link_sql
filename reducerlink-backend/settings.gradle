@@ -1,0 +1,6 @@
+include 'reducerlink-model'
+include 'reducerlink-dao'
+include 'reducerlink-service'
+include 'reducerlink-controller'
+
+rootProject.name = 'reducerlink-backend'
