@@ -1,11 +1,9 @@
 package com.instinctools.reducerlink.dao.impl;
 
 import java.util.List;
-
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import com.instinctools.reducerlink.model.User;
 
-@Component
 public class UserDaoImpl extends BaseDao<User, Long> {
     public UserDaoImpl() {
         super(User.class);
@@ -13,11 +11,11 @@ public class UserDaoImpl extends BaseDao<User, Long> {
 
     public Long getIdUserByLoginPassword(String login,String password) {
         return null;
-    };
+    }
 
     public User getUserByLoginPassword(String login,String password) {
         return null;
-    };
+    }
 
     public User getUserByEmail(String email) {
         return null;

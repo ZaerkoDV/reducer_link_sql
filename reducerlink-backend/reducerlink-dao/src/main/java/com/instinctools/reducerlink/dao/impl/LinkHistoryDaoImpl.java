@@ -1,6 +1,8 @@
 package com.instinctools.reducerlink.dao.impl;
 
+import org.springframework.stereotype.Repository;
 import com.instinctools.reducerlink.model.LinkHistory;
+
 
 public class LinkHistoryDaoImpl extends BaseDao<LinkHistory, Long> {
     public LinkHistoryDaoImpl() {

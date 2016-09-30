@@ -1,0 +1,11 @@
+#set( $subject = "New question" )
+<html>
+<body>
+    First name: ${esc.html($profile.firstName)}<br />
+    Middle name: ${esc.html($profile.middleName)}<br />
+    Last name: ${esc.html($profile.lastName)}<br />
+    E-mail: <a href="mailto:${esc.url($primaryEmail)}">${esc.html($primaryEmail)}</a>
+    <hr />
+    ${question}
+</body>
+</html>

@@ -1,7 +1,6 @@
 package com.instinctools.reducerlink.dao.impl;
 
 import java.util.List;
-
 import com.instinctools.reducerlink.model.Link;
 
 public class LinkDaoImpl extends BaseDao<Link, Long> {

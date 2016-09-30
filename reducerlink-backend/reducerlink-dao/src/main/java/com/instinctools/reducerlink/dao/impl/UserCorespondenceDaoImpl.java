@@ -1,7 +1,7 @@
 package com.instinctools.reducerlink.dao.impl;
 
 import java.util.List;
-
+import org.springframework.stereotype.Repository;
 import com.instinctools.reducerlink.model.UserCorespondence;
 
 public class UserCorespondenceDaoImpl extends BaseDao<UserCorespondence, Long> {
