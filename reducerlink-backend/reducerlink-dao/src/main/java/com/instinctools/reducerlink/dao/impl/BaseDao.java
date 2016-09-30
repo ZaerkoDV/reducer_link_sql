@@ -1,4 +1,4 @@
-package com.instinctools.reducerlink.dao;
+package com.instinctools.reducerlink.dao.impl;
 
 import java.io.Serializable;
 import java.util.List;

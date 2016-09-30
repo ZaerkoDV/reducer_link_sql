@@ -76,7 +76,7 @@ public class UserSecurity extends BaseEntity<Long> {
         return this;
     }
 
-    public User getUser(User user){
+    public User getUser(){
         return user;
     }
 
