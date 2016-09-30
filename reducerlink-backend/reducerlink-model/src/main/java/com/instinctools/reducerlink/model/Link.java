@@ -11,8 +11,8 @@ import javax.persistence.SequenceGenerator;
 public class Link extends BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genn")
-    @SequenceGenerator(name = "seq_genn", sequenceName = "public.id_link_seq", initialValue=1, allocationSize=1)
-    @Column(name="id_link", columnDefinition="integer", nullable = false)
+    @SequenceGenerator(name = "seq_genn", sequenceName = "public.link_id_seq", initialValue=1, allocationSize=1)
+    @Column(name="id", columnDefinition="integer", nullable = false)
     private Long id;
 
     @Column

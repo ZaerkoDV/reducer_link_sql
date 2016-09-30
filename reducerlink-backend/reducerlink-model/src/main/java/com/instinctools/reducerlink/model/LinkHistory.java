@@ -10,8 +10,8 @@ import javax.persistence.SequenceGenerator;
 public class LinkHistory extends BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genn")
-    @SequenceGenerator(name = "seq_genn", sequenceName = "public.id_link_history_seq", initialValue=1, allocationSize=1)
-    @Column(name="id_link_history", columnDefinition="integer", nullable = false)
+    @SequenceGenerator(name = "seq_genn", sequenceName = "public.link_history_id_seq", initialValue=1, allocationSize=1)
+    @Column(name="id", columnDefinition="integer", nullable = false)
     private Long id;
 
     @Column

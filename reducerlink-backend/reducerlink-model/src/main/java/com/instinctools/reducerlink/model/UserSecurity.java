@@ -11,8 +11,8 @@ public class UserSecurity extends BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genn")
-    @SequenceGenerator(name = "seq_genn", sequenceName = "public.id_user_security_seq", initialValue=1, allocationSize=1)
-    @Column(name="id_user_security", columnDefinition="integer", nullable = false)
+    @SequenceGenerator(name = "seq_genn", sequenceName = "public.user_security_id_seq", initialValue=1, allocationSize=1)
+    @Column(name="id", columnDefinition="integer", nullable = false)
     private Long id;
 
     @Column

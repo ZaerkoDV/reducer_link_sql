@@ -1,4 +1,0 @@
-
-include 'reducerlink-model'
-
-rootProject.name = 'reducerlink-backend'

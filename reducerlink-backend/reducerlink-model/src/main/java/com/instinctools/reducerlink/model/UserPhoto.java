@@ -12,8 +12,8 @@ public class UserPhoto extends BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genn")
-    @SequenceGenerator(name = "seq_genn", sequenceName = "public.id_user_photo_seq", initialValue=1, allocationSize=1)
-    @Column(name="id_user_photo", columnDefinition="integer", nullable = false)
+    @SequenceGenerator(name = "seq_genn", sequenceName = "public.user_photo_id_seq", initialValue=1, allocationSize=1)
+    @Column(name="id", columnDefinition="integer", nullable = false)
     private Long id;
 
     @Column
