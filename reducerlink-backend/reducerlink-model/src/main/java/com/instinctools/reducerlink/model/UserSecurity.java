@@ -1,17 +1,20 @@
 package com.instinctools.reducerlink.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+@Entity
 public class UserSecurity extends BaseEntity<Long> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genn")
-    @SequenceGenerator(name = "seq_genn", sequenceName = "public.user_security_id_seq", initialValue=1, allocationSize=1)
+    @SequenceGenerator(name = "seq_genn", sequenceName = "user_security_id_seq", initialValue=1, allocationSize=1)
     @Column(name="id", columnDefinition="integer", nullable = false)
     private Long id;
 
@@ -25,9 +28,9 @@ public class UserSecurity extends BaseEntity<Long> {
     private String role;
 
     @Column
-    private String tokin;
+    private String token;
 
-    @OneToOne(optional=false, mappedBy="userSecurity")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 
     @Override
@@ -67,12 +70,12 @@ public class UserSecurity extends BaseEntity<Long> {
         return this;
     }
 
-    public String getTokin() {
-        return tokin;
+    public String getToken() {
+        return token;
     }
 
-    public UserSecurity setTokin(String tokin) {
-        this.tokin = tokin;
+    public UserSecurity setToken(String token) {
+        this.token = token;
         return this;
     }
 

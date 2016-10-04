@@ -1,11 +1,13 @@
 package com.instinctools.reducerlink.dao;
 
+import com.instinctools.reducerlink.model.User;
 import com.instinctools.reducerlink.model.UserSecurity;
 
-public interface UserSecurityDao {
-    public Boolean login(String login, String password);
-    public Boolean logout(String login, String password);
+public interface UserSecurityDao extends BaseDao<UserSecurity, Long> {
+    public User getUserByLoginPassword(String login, String password);
+    public String getEncodedPasswordByLogin(String login);
+    public String getOldTokenByLogin(String login);
     public String getUserRole(Long idUser);
-    public Boolean isLoginPasswordExist(String login, String password);
-    public UserSecurity findByAuthorizationToken(String authorizationToken);
+    public Boolean isLoginExist(String login);
+    public UserSecurity findUserSecurityByToken(String token);
 }

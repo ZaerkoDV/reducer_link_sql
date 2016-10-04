@@ -185,8 +185,8 @@ databaseChangeLog(logicalFilePath: 'main-1') {
                 constraints nullable: false
             }
 			
-			column name: 'tokin', type: 'varchar(255)', {
-                constraints nullable: false
+			column name: 'token', type: 'varchar(255)', {
+                constraints nullable: true
             }
 
             column name: 'user_id', type: 'bigint', {
@@ -207,7 +207,7 @@ databaseChangeLog(logicalFilePath: 'main-1') {
         }
 		
 		createIndex tableName: 'user_security', indexName: 'idx__user_security__tokin', {
-            column name: 'tokin'
+            column name: 'token'
         }
 		
 		createIndex tableName: 'user_security', indexName: 'idx__user_security__user_id', {

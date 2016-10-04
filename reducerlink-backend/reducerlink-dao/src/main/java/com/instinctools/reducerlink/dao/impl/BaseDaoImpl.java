@@ -13,12 +13,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
-public class BaseDao<T, ID extends Serializable> {
+public class BaseDaoImpl<T, ID extends Serializable> {
     protected Class<T> domainClass;
     protected EntityManager em;
     protected SimpleJpaRepository<T, ID> repository;
 
-    public BaseDao(Class<T> domainClass) {
+    public BaseDaoImpl(Class<T> domainClass) {
         this.domainClass = domainClass;
     }
 
@@ -136,4 +136,3 @@ public class BaseDao<T, ID extends Serializable> {
         return em.unwrap(Session.class).createCriteria(domainClass);
     }
 }
-

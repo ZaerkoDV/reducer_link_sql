@@ -9,10 +9,9 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 public class User extends BaseEntity<Long> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genn")
-    @SequenceGenerator(name = "seq_genn", sequenceName = "public.user_id_seq", initialValue=1, allocationSize=1)
+    @SequenceGenerator(name = "seq_genn", sequenceName = "user_id_seq", initialValue=1, allocationSize=1)
     @Column(name="id", columnDefinition="integer", nullable = false)
     private Long id;
 

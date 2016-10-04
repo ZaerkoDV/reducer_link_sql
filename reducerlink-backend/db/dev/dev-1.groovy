@@ -73,7 +73,7 @@ databaseChangeLog(logicalFilePath: 'dev-1') {
             column name: 'login', value: 'ivanov'
             column name: 'password', value: 'ivanov'
 			column name: 'role', value: 'admin'
-			column name: 'tokin', value: 'dfagshagdjbhgfdyvbfybvyvyvynhnfdnlvlfndjnfvdjlnvl'
+			column name: 'token', value: 'dfagshagdjbhgfdyvbfybvyvyvynhnfdnlvlfndjnfvdjlnvl'
 			column name: 'user_id', value: 1
         }
 		
@@ -82,7 +82,7 @@ databaseChangeLog(logicalFilePath: 'dev-1') {
             column name: 'login', value: 'petrov'
             column name: 'password', value: 'petrov'
 			column name: 'role', value: 'client'
-			column name: 'tokin', value: 'werreriurihunchmehcobgubvnlvgbgbmugnbgnbugnnbgunbu'
+			column name: 'token', value: 'werreriurihunchmehcobgubvnlvgbgbmugnbgnbugnnbgunbu'
 			column name: 'user_id', value: 2
         }
 

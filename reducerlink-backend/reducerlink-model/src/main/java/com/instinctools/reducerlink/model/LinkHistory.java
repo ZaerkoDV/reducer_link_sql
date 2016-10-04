@@ -1,16 +1,20 @@
 package com.instinctools.reducerlink.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+@Entity
 public class LinkHistory extends BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genn")
-    @SequenceGenerator(name = "seq_genn", sequenceName = "public.link_history_id_seq", initialValue=1, allocationSize=1)
+    @SequenceGenerator(name = "seq_genn", sequenceName = "link_history_id_seq", initialValue=1, allocationSize=1)
     @Column(name="id", columnDefinition="integer", nullable = false)
     private Long id;
 
@@ -20,7 +24,7 @@ public class LinkHistory extends BaseEntity<Long> {
     @Column
     private Long sumClick;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Link link;
 
     @Override
