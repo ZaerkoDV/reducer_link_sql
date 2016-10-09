@@ -1,6 +1,5 @@
 package com.instinctools.reducerlink.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +23,7 @@ public class LinkHistory extends BaseEntity<Long> {
     @Column
     private Long sumClick;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     private Link link;
 
     @Override

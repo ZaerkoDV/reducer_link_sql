@@ -25,7 +25,7 @@ public class UserPhoto extends BaseEntity<Long> {
     @Column
     private byte[] photoData;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private User user;
 

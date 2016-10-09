@@ -1,5 +1,9 @@
 package com.instinctools.reducerlink.dao.impl;
 
+import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import com.instinctools.reducerlink.dao.UserPhotoDao;
 import com.instinctools.reducerlink.model.UserPhoto;
@@ -10,12 +14,14 @@ public class UserPhotoDaoImpl extends BaseDaoImpl<UserPhoto, Long> implements Us
         super(UserPhoto.class);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public UserPhoto findByIdUserAndId(Long idUser, Long idUserPhoto) {
-        return null;
-    }
-    @Override
-    public Long getListIdUserPhoto(Long idUser) {
-        return null;
+    public List<Long> getListIdUserPhoto(Long idUser) {
+        Criteria criteria = createCriteria()
+            .createAlias("user", "u")
+            .setProjection(Projections.property("id"))
+            .add(Restrictions.eq("u.id", idUser));
+
+        return criteria.list();
     }
 }

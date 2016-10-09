@@ -31,7 +31,7 @@ public class Link extends BaseEntity<Long> {
     @Column
     private String fullUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private User user;
 

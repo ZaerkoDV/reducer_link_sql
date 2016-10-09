@@ -8,5 +8,4 @@ import com.instinctools.reducerlink.service.base.AuthorizedService;
 @Service
 @Transactional
 public class LinkHistoryServiceImpl extends AuthorizedService implements LinkHistoryService {
-
 }

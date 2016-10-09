@@ -1,24 +1,27 @@
 package com.instinctools.reducerlink.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.instinctools.reducerlink.dao.UserCorespondenceDao;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import com.instinctools.reducerlink.model.Link;
 import com.instinctools.reducerlink.model.User;
 import com.instinctools.reducerlink.model.UserCorespondence;
 import com.instinctools.reducerlink.model.UserPhoto;
 import com.instinctools.reducerlink.model.UserSecurity;
 import com.instinctools.reducerlink.service.UserCorespondenceService;
+import com.instinctools.reducerlink.service.UserPhotoService;
 import com.instinctools.reducerlink.service.UserService;
 import com.instinctools.reducerlink.service.support.ObjUtils;
 
@@ -27,14 +30,16 @@ public class UserController extends BaseController {
     private static final String ACTIVE = "active";
     private static final String BLOCKED = "blocked";
     private static final String DEPENDENT_LINK_EXIST = "dependentLinkExist";
-
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    //private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
 
     @Autowired
     private UserCorespondenceService userCorespondenceService;
+
+    @Autowired
+    private UserPhotoService userPhotoService;
 
     @RequestMapping(value = "user/byId/get", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserByIdGet(@RequestBody Map<String, Object> request) {
@@ -166,30 +171,68 @@ public class UserController extends BaseController {
         return buildValidationResult(
             userCorespondenceService.createUserCorespondence((new UserCorespondence())
                 .setEmail(ObjUtils.asString(request, "email"))
-                .setSkype(ObjUtils.asString(request, "skupe"))
+                .setSkype(ObjUtils.asString(request, "skype"))
                 .setPhone(ObjUtils.asString(request, "phone"))
-                .setIpAddress(ObjUtils.asString(request, "1.2.3.4"))
+                .setIpAddress(ObjUtils.asString(request, "ipAddress"))
                 .setUser(new User()
                 .setId(ObjUtils.asLong(ObjUtils.asObject(request, "user"), "id"))
-         )), userCorespondence -> toMap("id", userCorespondence.getUser().getId()));
+            )), userCorespondence -> toMap(
+                "idUser", userCorespondence.getUser().getId(),
+                "idCorespondence", userCorespondence.getId()
+            ));
     }
 
-//    @RequestMapping(value = "user/corespondence/delete", method = RequestMethod.POST)
-//    public ResponseEntity<?> actionPostUserCorespondenceDelete(@RequestBody Map<String, Object> request) {
-//    }
+    @RequestMapping(value = "user/corespondence/update", method = RequestMethod.POST)
+    public ResponseEntity<?> actionPostUserCorespondenceUpdate(@RequestBody Map<String, Object> request) {
+        return buildValidationResult(
+            userCorespondenceService.updateUserCorespondence((new UserCorespondence())
+                .setId(ObjUtils.asLong(request, "id"))
+                .setEmail(ObjUtils.asString(request, "email"))
+                .setSkype(ObjUtils.asString(request, "skype"))
+                .setPhone(ObjUtils.asString(request, "phone"))
+                .setIpAddress(ObjUtils.asString(request, "ipAddress"))
+            ), userCorespondence -> toMap(
+                "idUser", userCorespondence.getUser().getId(),
+                "idCorespondence", userCorespondence.getId()
+            ));
+    }
 
+    @RequestMapping(value = "user/corespondence/delete", method = RequestMethod.POST)
+    public ResponseEntity<?> actionPostUserCorespondenceDelete(@RequestBody Map<String, Object> request) {
+        return buildOk(userCorespondenceService.deleteUserCorespondence(
+            ObjUtils.asLong(request, "id")
+        ));
+    }
 
+    @RequestMapping(value = "user/photo/get/{idPhoto}", method = RequestMethod.GET)
+    public BufferedImage actionPostUserPhotoGet(@PathVariable("idPhoto") Long idPhoto) {
+        return userPhotoService.getPhotoById(idPhoto);
+    }
 
+    @RequestMapping(value = "user/photo/create", method = RequestMethod.POST)
+    public ResponseEntity<?> actionPostUserPhotoCreate(@RequestParam("id") Long idUser, @RequestParam("file") MultipartFile file) {
+        byte[] imageFile;
 
-//    @RequestMapping(value = "user/photo/get", method = RequestMethod.POST)
-//    public ResponseEntity<?> actionPostUserPhotoGet(@RequestBody Map<String, Object> request) {
-//    }
-//
-//    @RequestMapping(value = "user/photo/create", method = RequestMethod.POST)
-//    public ResponseEntity<?> actionPostUserPhotoCreate(@RequestBody Map<String, Object> request) {
-//    }
-//
-//    @RequestMapping(value = "user/photo/delete", method = RequestMethod.POST)
-//    public ResponseEntity<?> actionPostUserPhotoDelete(@RequestBody Map<String, Object> request) {
-//    }
+        try {
+            if (file.isEmpty()) {
+                return buildError(ERROR_UPLOAD);
+            }
+                imageFile = file.getBytes();
+        } catch (IOException e) {
+            return buildError(ERROR_UPLOAD);
+        }
+
+        UserPhoto userPhoto = userPhotoService.saveUserPhoto(idUser, getCurrentTimestamp(), imageFile);
+
+        return buildOk(toMap(
+            "id", userPhoto.getId()
+        ));
+    }
+
+    @RequestMapping(value = "user/photo/delete", method = RequestMethod.POST)
+    public ResponseEntity<?> actionPostUserPhotoDelete(@RequestBody Map<String, Object> request) {
+        return buildOk(userPhotoService.deleteUserPhoto(
+            ObjUtils.asLong(request, "id")
+        ));
+    }
 }
