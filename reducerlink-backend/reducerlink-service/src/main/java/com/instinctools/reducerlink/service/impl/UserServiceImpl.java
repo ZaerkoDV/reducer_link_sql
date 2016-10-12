@@ -6,9 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.instinctools.reducerlink.dao.LinkDao;
-import com.instinctools.reducerlink.dao.UserCorespondenceDao;
 import com.instinctools.reducerlink.dao.UserDao;
-import com.instinctools.reducerlink.dao.UserPhotoDao;
 import com.instinctools.reducerlink.dao.UserSecurityDao;
 import com.instinctools.reducerlink.model.Link;
 import com.instinctools.reducerlink.model.User;
@@ -23,7 +21,6 @@ import com.instinctools.reducerlink.service.support.ValidationResult;
 public class UserServiceImpl extends AuthorizedService implements UserService {
     private static final String ERROR_INVALID_CREDENTIALS = "invalidCredentials";
     private static final String ADMIN_ROLE = "admin";
-    private static final String USER_ROLE = "user";
     private static final String LOGIN_REQUIRED = "loginRequired";
     private static final String LOGIN_EXIST = "loginExist";
     private static final String PASSWORD_REQUIRED = "passwordRequired";
@@ -37,12 +34,6 @@ public class UserServiceImpl extends AuthorizedService implements UserService {
 
     @Autowired
     private UserSecurityDao userSecurityDao;
-
-    @Autowired
-    private UserCorespondenceDao userCorespondenceDao;
-
-    @Autowired
-    private UserPhotoDao userPhotoDao;
 
     @Autowired
     private LinkDao linkDao;

@@ -1,7 +1,13 @@
 package com.instinctools.reducerlink.service.impl;
 
+import javaQuery.j2ee.tinyURL;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.Proxy;
+import java.net.URL;
 import java.util.List;
 import javax.transaction.Transactional;
+import org.apache.commons.validator.routines.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.instinctools.reducerlink.dao.LinkDao;
@@ -20,7 +26,6 @@ import com.instinctools.reducerlink.service.support.ValidationResult;
 public class LinkServiceImpl extends AuthorizedService implements LinkService {
     private static final String TAG_REQUIRED= "tagRequired";
     private static final String COMMENT_REQUIRED= "commentRequired";
-    private static final String SHORT_URL_REQUIRED= "shortUrlRequired";
     private static final String FULL_URL_REQUIRED= "fullUrlRequired";
 
     @Autowired
@@ -47,7 +52,7 @@ public class LinkServiceImpl extends AuthorizedService implements LinkService {
 
         User user = ensureFound(userDao.findOne(inputLink.getUser().getId()));
         inputLink.setUser(user);
-        inputLink.setShortUrl(inputLink.getFullUrl());
+        inputLink.setShortUrl(reduceURL(inputLink.getFullUrl()));
         linkDao.save(inputLink);
 
         LinkHistory linkHistory = new LinkHistory()
@@ -71,7 +76,7 @@ public class LinkServiceImpl extends AuthorizedService implements LinkService {
         updatedLink.setTag(inputLink.getTag())
         .setComment(inputLink.getComment())
         .setFullUrl(inputLink.getFullUrl())
-        .setShortUrl(inputLink.getFullUrl());
+        .setShortUrl(reduceURL(inputLink.getFullUrl()));
         linkDao.save(updatedLink);
 
         LinkHistory updatedLinkHistory = ensureFound(linkHistoryDao.getLinkHistoryByIdLink(updatedLink.getId()));
@@ -136,11 +141,57 @@ public class LinkServiceImpl extends AuthorizedService implements LinkService {
         return result;
     }
 
+    @Override
     public Long increaseNumberLinkVisits(Long idLink) {
         LinkHistory linkHistory = ensureFound(linkHistoryDao.getLinkHistoryByIdLink(idLink));
         linkHistory.setSumClick(linkHistory.getSumClick()+1);
         linkHistoryDao.save(linkHistory);
 
         return linkHistory.getSumClick();
+    }
+
+    public String reduceURL(String fullURL) {
+        tinyURL tU = new tinyURL();
+        String shortURL = "";
+
+        if(!fullURL.isEmpty() && isValidURL(fullURL)) {
+            shortURL = tU.getTinyURL(fullURL);
+        } else {
+            throw new NullPointerException("Service:New link not saved.Link must not be null.");
+        }
+
+        return shortURL;
+    }
+
+    public String expandURL(String shortURL) {
+        String expandURL;
+        URL url;
+        HttpURLConnection httpURLConnection;
+
+        try {
+            url = new URL(shortURL);
+            httpURLConnection = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
+            httpURLConnection.setInstanceFollowRedirects(false);
+            expandURL = httpURLConnection.getHeaderField("Location");
+            httpURLConnection.disconnect();
+        } catch(IOException e){
+            expandURL = "";
+        }
+
+        return expandURL;
+    }
+
+    public Boolean isValidURL(String fullUrl) {
+        UrlValidator urlValidator;
+        Boolean resultCheckUrl;
+
+        if (!fullUrl.isEmpty()) {
+            urlValidator = new UrlValidator();
+            resultCheckUrl = urlValidator.isValid(fullUrl);
+        } else {
+            throw new NullPointerException("Invalid url");
+        }
+
+        return resultCheckUrl;
     }
 }
