@@ -208,7 +208,7 @@ public class UserController extends BaseController {
     public BufferedImage actionPostUserPhotoGet(@PathVariable("idPhoto") Long idPhoto) {
         return userPhotoService.getPhotoById(idPhoto);
     }
-
+    //300 300
     @RequestMapping(value = "user/photo/create", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserPhotoCreate(@RequestParam("id") Long idUser, @RequestParam("file") MultipartFile file) {
         byte[] imageFile;
@@ -217,7 +217,9 @@ public class UserController extends BaseController {
             if (file.isEmpty()) {
                 return buildError(ERROR_UPLOAD);
             }
-                imageFile = file.getBytes();
+
+            imageFile = file.getBytes();
+
         } catch (IOException e) {
             return buildError(ERROR_UPLOAD);
         }
