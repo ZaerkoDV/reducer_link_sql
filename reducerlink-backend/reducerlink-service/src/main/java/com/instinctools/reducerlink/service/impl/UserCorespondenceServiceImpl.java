@@ -24,9 +24,8 @@ public class UserCorespondenceServiceImpl extends AuthorizedService implements U
     private static final String PHONE_EXIST = "phoneExist";
     private static final String IP_ADDRESS_REQUIRED = "ipAddressRequired";
     private static final String IP_ADDRESS_MISSING = "ipAddressMissing";
-    private static final String PATH_TO_IP_V4 = "GeoLiteCity.dat";
-    private static final String PATH_TO_IP_V6 = "GeoLiteCityv6.dat";
-
+    //private static final String PATH_TO_IP_V4 = "GeoLiteCity.dat";
+    //private static final String PATH_TO_IP_V6 = "GeoLiteCityv6.dat";
 
     @Autowired
     private UserDao userDao;

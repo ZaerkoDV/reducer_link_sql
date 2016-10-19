@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.instinctools.reducerlink.model.Link;
+import com.instinctools.reducerlink.model.LinkHistory;
 import com.instinctools.reducerlink.model.User;
 import com.instinctools.reducerlink.service.LinkService;
 import com.instinctools.reducerlink.service.support.ObjUtils;
@@ -82,32 +83,57 @@ public class LinkController extends BaseController {
             ObjUtils.asBoolean(request, "orderAsc"),
             ObjUtils.asInteger(request, "pageNum"),
             Math.min(MAX_PAGE_SIZE, ObjUtils.asInteger(request, "pageSize"))
-         ), link -> toMap(
-             "id", link.getId(),
-             "tag", link.getTag(),
-             "comment", link.getComment(),
-             "shortUrl", link.getFullUrl(),
-             "fullUrl", link.getFullUrl()
-         ));
+        ), linkHistory -> toMap(
+            "idLink", linkHistory.getLink().getId(),
+            "tag", linkHistory.getLink().getTag(),
+            "comment", linkHistory.getLink().getComment(),
+            "urlShort", linkHistory.getLink().getShortUrl(),
+            "urlFull", linkHistory.getLink().getFullUrl(),
+            "createdAtTimeTimestamp", linkHistory.getCreatedAtTimestamp(),
+            "sumClick", linkHistory.getSumClick(),
+            "idUser", linkHistory.getLink().getUser().getId()
+        ));
      }
 
     @RequestMapping(value = "link/byTag/getList", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkByTagGetList(@RequestBody Map<String, Object> request) {
-        List<Link> listLink = linkService.getListLinkByTag(
+        List<LinkHistory> listLinkHistory = linkService.getListLinkByTag(
             ObjUtils.asString(request, "tag"),
             ObjUtils.asString(request, "orderBy", "id"),
             ObjUtils.asBoolean(request, "orderAsc")
         );
 
         return buildOk(
-            mapList(listLink, link -> toMap(
-                "id", link.getId(),
-                "tag", link.getTag(),
-                "comment", link.getComment(),
-                "shortUrl", link.getShortUrl(),
-                "idUser", link.getUser().getId()
+            mapList(listLinkHistory, linkHistory -> toMap(
+                "idLink", linkHistory.getLink().getId(),
+                "tag", linkHistory.getLink().getTag(),
+                "comment", linkHistory.getLink().getComment(),
+                "urlShort", linkHistory.getLink().getShortUrl(),
+                "urlFull", linkHistory.getLink().getFullUrl(),
+                "createdAtTimeTimestamp", linkHistory.getCreatedAtTimestamp(),
+                "sumClick", linkHistory.getSumClick(),
+                "idUser", linkHistory.getLink().getUser().getId()
             ))
         );
+    }
+
+    @RequestMapping(value = "link/all/getFullList", method = RequestMethod.POST)
+    public ResponseEntity<?> actionPostLinkAllGetFullList(@RequestBody Map<String, Object> request) {
+        return buildPagedResult(linkService.getListAllLink(
+            ObjUtils.asString(request, "orderBy", "id"),
+            ObjUtils.asBoolean(request, "orderAsc"),
+            ObjUtils.asInteger(request, "pageNum"),
+            Math.min(MAX_PAGE_SIZE, ObjUtils.asInteger(request, "pageSize"))
+        ), linkHistory -> toMap(
+            "idLink", linkHistory.getLink().getId(),
+            "tag", linkHistory.getLink().getTag(),
+            "comment", linkHistory.getLink().getComment(),
+            "urlShort", linkHistory.getLink().getShortUrl(),
+            "urlFull", linkHistory.getLink().getFullUrl(),
+            "createdAtTimeTimestamp", linkHistory.getCreatedAtTimestamp(),
+            "sumClick", linkHistory.getSumClick(),
+            "idUser", linkHistory.getLink().getUser().getId()
+        ));
     }
 
     @RequestMapping(value = "link/ByDate/getList", method = RequestMethod.POST)
@@ -132,6 +158,7 @@ public class LinkController extends BaseController {
         return buildOk(linkService.getListUniqueTag());
     }
 
+    //idLink
     @RequestMapping(value = "link/numberLinkVisits/increase", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkNumberLinkVisitsIncrease(@RequestBody Map<String, Object> request) {
         Long incresedSumClick = linkService.increaseNumberLinkVisits(

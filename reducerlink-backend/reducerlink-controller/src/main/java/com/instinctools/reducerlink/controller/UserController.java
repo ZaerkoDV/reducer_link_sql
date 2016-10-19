@@ -28,7 +28,7 @@ import com.instinctools.reducerlink.service.support.ObjUtils;
 @Controller
 public class UserController extends BaseController {
     private static final String ACTIVE = "active";
-    private static final String BLOCKED = "blocked";
+    //private static final String BLOCKED = "blocked";
     private static final String DEPENDENT_LINK_EXIST = "dependentLinkExist";
     //private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 

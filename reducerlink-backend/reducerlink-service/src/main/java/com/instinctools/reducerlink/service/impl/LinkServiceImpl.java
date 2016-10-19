@@ -95,16 +95,24 @@ public class LinkServiceImpl extends AuthorizedService implements LinkService {
     }
 
     @Override
-    public PagedResult<Link> getListLinkByIdUser(Long idUser, String orderBy, boolean orderAsc, int pageNum, int pageSize) {
-        return new PagedResult<Link>(
-            linkDao.getListLinkByIdUser(idUser, orderBy, orderAsc, pageNum, pageSize),
+    public PagedResult<LinkHistory> getListLinkByIdUser(Long idUser, String orderBy, boolean orderAsc, int pageNum, int pageSize) {
+        return new PagedResult<LinkHistory>(
+            linkHistoryDao.getListLinkByIdUser(idUser, orderBy, orderAsc, pageNum, pageSize),
             computePages(linkDao.countLinkByUser(idUser), pageSize)
         );
     }
 
     @Override
-    public List<Link> getListLinkByTag(String tag, String orderBy, boolean orderAsc) {
-        return linkDao.getListLinkByTag(tag, orderBy, orderAsc);
+    public List<LinkHistory> getListLinkByTag(String tag, String orderBy, boolean orderAsc) {
+        return linkHistoryDao.getListLinkByTag(tag, orderBy, orderAsc);
+    }
+
+    @Override
+    public PagedResult<LinkHistory> getListAllLink(String orderBy, boolean orderAsc, int pageNum, int pageSize) {
+        return new PagedResult<LinkHistory>(
+            linkHistoryDao.getListAllLink(orderBy, orderAsc, pageNum, pageSize),
+            computePages(linkDao.findAll().size(), pageSize)
+        );
     }
 
     @Override
@@ -115,6 +123,15 @@ public class LinkServiceImpl extends AuthorizedService implements LinkService {
     @Override
     public List<String> getListUniqueTag() {
         return linkDao.getListUniqueTag();
+    }
+
+    @Override
+    public Long increaseNumberLinkVisits(Long idLink) {
+        LinkHistory linkHistory = ensureFound(linkHistoryDao.getLinkHistoryByIdLink(idLink));
+        linkHistory.setSumClick(linkHistory.getSumClick()+1);
+        linkHistoryDao.save(linkHistory);
+
+        return linkHistory.getSumClick();
     }
 
     public <T> ValidationResult<T> validate(Link inputLink, ValidationResult<T> result) {
@@ -139,15 +156,6 @@ public class LinkServiceImpl extends AuthorizedService implements LinkService {
         }
 
         return result;
-    }
-
-    @Override
-    public Long increaseNumberLinkVisits(Long idLink) {
-        LinkHistory linkHistory = ensureFound(linkHistoryDao.getLinkHistoryByIdLink(idLink));
-        linkHistory.setSumClick(linkHistory.getSumClick()+1);
-        linkHistoryDao.save(linkHistory);
-
-        return linkHistory.getSumClick();
     }
 
     public String reduceURL(String fullURL) {
