@@ -1,0 +1,41 @@
+convertAngle(value, toUnit)
+    convertableUnits = deg grad turn rad
+    conversionFactors = 1 (10grad / 9deg) (1turn / 360deg) (3.14159rad / 180deg)
+
+    if index(convertableUnits, unit(value)) != null && index(convertableUnits, toUnit) != null
+        value / conversionFactors[index(convertableUnits, unit(value))] * conversionFactors[index(convertableUnits, toUnit)]
+
+isDirection(value)
+    isDir = index(((to top) (to top right) (to right top) (to right) (to bottom right) (to right bottom) (to bottom) (to bottom left) (to left bottom) (to left) (to left top) (to top left)), value)
+    isAngle = type(value) == "unit" && index(("deg" "grad" "turn" "rad"), unit(value)) != null
+    isDir != null || isAngle
+
+legacyDirection(value)
+    conversionMap = {"to top": bottom, "to top right": bottom left, "to right top": left bottom, "to right": left, "to bottom right": top left, "to right bottom": left top, "to bottom": top, "to bottom left": top right, "to left bottom": right top, "to left": right, "to left top": right bottom, "to top left": bottom right}
+
+    if conversionMap[join(' ', value)]
+        conversionMap[join(' ', value)]
+    else
+        90deg - convertAngle(value, "deg")
+
+linearGradient(direction, colorStops...)
+    if !isDirection(direction)
+        colorStops = direction, colorStops
+        direction = 180deg
+
+    background unquote(split(" ", s("%s", colorStops[0]))[0])
+    background -webkit-linear-gradient(legacyDirection(direction), colorStops)
+    background linear-gradient(direction, colorStops)
+
+backgroundOpacity(color, opacity = 0.5)
+    background color
+    background rgba(color, opacity)
+
+clearfix()
+    &:before,
+    &:after
+        content " "
+        display table
+
+    &:after
+        clear both

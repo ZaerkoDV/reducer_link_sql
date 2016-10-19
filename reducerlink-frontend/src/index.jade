@@ -1,4 +1,57 @@
 extends ./partials/layout
 
 block layoutBody
-    | Hello
+    div
+        div
+            .navbar.navbar-default.navbar-static-top
+                .container-fluid
+                    .navbar-header
+                        .span.navbar-brand Bear Shop Market
+                    ul.nav.navbar-nav.navbar-right
+                        li
+                            a(ng-click="logout()")
+                                span.glyphicon.glyphicon-log-out Logout
+            .container-fluid
+                .row
+                    div(class="col-md-2")
+                        ui(class="nav nav-pills nav-stacked")
+                            li(class="active")
+                                a(href="#") Suppliers
+                            li
+                                a(href="#") Locations
+                            li
+                                a(href="#") Units
+                            li
+                                a(href="#") Orders
+                    div(class="col-md-10")
+                        h3(style="margin-top:0;") Products
+                        button.btn.btn-primary.btn-md(ng-click="createProduct()") New Product
+                    div(class="col-md-10")
+                        div &nbsp
+                    div(class="col-md-10")
+                        table.table-bordered
+                            thead
+                                tr
+                                    th N
+                                    th Created
+                                    th Title
+                                    th Supplier
+                                    th City
+                                    th Def.Price
+                                    th Number Of Views
+                                    th Number Of Purchases
+                                    th Edit
+                            tbody(ng-repeat="product in productList")
+                                tr(ng-repeat="item in product")
+                                    td {{ item.id }}
+                                    td {{ item.createdAtTimestamp | date: "yyyy-MM-dd" }}
+                                    td {{ item.title }}
+                                    td {{ item.supplierName }}
+                                    td {{ item.city.name }}
+                                    td {{ item.defaultPrice }}
+                                    td {{ item.numberOfViews }}
+                                    td {{ item.numberOfPurchases }}
+                                    td
+                                        a.span.glyphicon.glyphicon-pencil(ng-click="editProduct(item.id)")
+                                        a.span.glyphicon.glyphicon-trash(ng-click="deleteProduct(item.id)")
+                                
