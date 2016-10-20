@@ -130,6 +130,7 @@ public class LinkServiceImpl extends AuthorizedService implements LinkService {
         LinkHistory linkHistory = ensureFound(linkHistoryDao.getLinkHistoryByIdLink(idLink));
         linkHistory.setSumClick(linkHistory.getSumClick()+1);
         linkHistoryDao.save(linkHistory);
+        linkHistoryDao.flush();
 
         return linkHistory.getSumClick();
     }

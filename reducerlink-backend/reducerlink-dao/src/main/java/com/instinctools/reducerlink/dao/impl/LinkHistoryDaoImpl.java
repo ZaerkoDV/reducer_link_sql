@@ -22,6 +22,7 @@ public class LinkHistoryDaoImpl extends BaseDaoImpl<LinkHistory, Long> implement
         MAP_ORDER_BY.put("tag", "l.tag");
         MAP_ORDER_BY.put("comment", "l.comment");
         MAP_ORDER_BY.put("id", "l.id");
+        MAP_ORDER_BY.put("createdAtTimestamp", "createdAtTimestamp");
     }
 
     public LinkHistoryDaoImpl() {

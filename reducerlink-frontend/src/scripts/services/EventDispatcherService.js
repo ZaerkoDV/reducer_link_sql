@@ -1,7 +1,6 @@
 "use strict";
 
-var angular = require("angular");
-angular.module("reducerLinkApplication").service("EventDispatcherService", function() {
+var EventDispatcherService = function() {
     function EventDispatcher() {
         var eventsMap = {};
 
@@ -34,4 +33,6 @@ angular.module("reducerLinkApplication").service("EventDispatcherService", funct
             return eventDispatcher;
         }
     };
-});
+};
+
+module.exports = [EventDispatcherService];

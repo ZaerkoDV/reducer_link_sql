@@ -1,7 +1,6 @@
 "use strict";
 
-var angular = require("angular");
-angular.module("reducerLinkApplication").service("AppService", function($document, EventDispatcherService) {
+var AppService = function($document, EventDispatcherService) {
     global.jQuery = require("jquery");
     global.$ = jQuery;
     require("bootstrap");
@@ -40,4 +39,6 @@ angular.module("reducerLinkApplication").service("AppService", function($documen
     });
 
     return admin;
-});
+};
+
+module.exports = ["$document", "EventDispatcherService", AppService];

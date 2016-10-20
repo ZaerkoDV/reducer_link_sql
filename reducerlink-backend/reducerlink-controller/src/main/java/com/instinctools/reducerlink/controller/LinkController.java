@@ -17,13 +17,14 @@ import com.instinctools.reducerlink.service.LinkService;
 import com.instinctools.reducerlink.service.support.ObjUtils;
 
 @Controller
+@RequestMapping(value="backend/link")
 public class LinkController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(LinkController.class);
 
     @Autowired
     private LinkService linkService;
 
-    @RequestMapping(value = "link/byId/get", method = RequestMethod.POST)
+    @RequestMapping(value = "/byId/get", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkByIdGet(@RequestBody Map<String, Object> request) {
         Link link = linkService.getLinkById(
             ObjUtils.asLong(request, "id")
@@ -38,7 +39,7 @@ public class LinkController extends BaseController {
         ));
     }
 
-    @RequestMapping(value = "link/new/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/new/create", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkNewCreate(@RequestBody Map<String, Object> request) {
         return buildValidationResult(
             linkService.createLink((new Link())
@@ -54,7 +55,7 @@ public class LinkController extends BaseController {
              ));
     }
 
-    @RequestMapping(value = "link/byId/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/byId/update", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkByIdUpdate(@RequestBody Map<String, Object> request) {
         return buildValidationResult(
             linkService.updateLink((new Link())
@@ -68,14 +69,14 @@ public class LinkController extends BaseController {
             ));
     }
 
-    @RequestMapping(value = "link/byId/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/byId/delete", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkByIdDelete(@RequestBody Map<String, Object> request) {
         return buildOk(linkService.deleteLink(
             ObjUtils.asLong(request, "id")
         ));
     }
 
-    @RequestMapping(value = "link/byIdUser/getList", method = RequestMethod.POST)
+    @RequestMapping(value = "/byIdUser/getList", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkByIdUserGetList(@RequestBody Map<String, Object> request) {
         return buildPagedResult(linkService.getListLinkByIdUser(
             ObjUtils.asLong(request, "id"),
@@ -95,7 +96,7 @@ public class LinkController extends BaseController {
         ));
      }
 
-    @RequestMapping(value = "link/byTag/getList", method = RequestMethod.POST)
+    @RequestMapping(value = "/byTag/getList", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkByTagGetList(@RequestBody Map<String, Object> request) {
         List<LinkHistory> listLinkHistory = linkService.getListLinkByTag(
             ObjUtils.asString(request, "tag"),
@@ -117,10 +118,10 @@ public class LinkController extends BaseController {
         );
     }
 
-    @RequestMapping(value = "link/all/getFullList", method = RequestMethod.POST)
+    @RequestMapping(value = "/all/getFullList", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkAllGetFullList(@RequestBody Map<String, Object> request) {
         return buildPagedResult(linkService.getListAllLink(
-            ObjUtils.asString(request, "orderBy", "id"),
+            ObjUtils.asString(request, "orderBy", "createdAtTimestamp"),
             ObjUtils.asBoolean(request, "orderAsc"),
             ObjUtils.asInteger(request, "pageNum"),
             Math.min(MAX_PAGE_SIZE, ObjUtils.asInteger(request, "pageSize"))
@@ -136,7 +137,7 @@ public class LinkController extends BaseController {
         ));
     }
 
-    @RequestMapping(value = "link/ByDate/getList", method = RequestMethod.POST)
+    @RequestMapping(value = "/ByDate/getList", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkByDateGetList(@RequestBody Map<String, Object> request) {
         List<Link> listLink = linkService.getListLinkBetweenDate(
             ObjUtils.asLong(request, "startTimestamp"),
@@ -153,18 +154,14 @@ public class LinkController extends BaseController {
         );
     }
 
-    @RequestMapping(value = "link/uniqual/getTagList", method = RequestMethod.POST)
+    @RequestMapping(value = "/uniqual/getTagList", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkUniqualGrtTagList(@RequestBody Map<String, Object> request) {
         return buildOk(linkService.getListUniqueTag());
     }
 
-    //idLink
-    @RequestMapping(value = "link/numberLinkVisits/increase", method = RequestMethod.POST)
-    public ResponseEntity<?> actionPostLinkNumberLinkVisitsIncrease(@RequestBody Map<String, Object> request) {
-        Long incresedSumClick = linkService.increaseNumberLinkVisits(
-            ObjUtils.asLong(request, "id")
-        );
-
-        return buildOk(incresedSumClick);
+    @RequestMapping(value = "/numberLinkVisits/increase", method = RequestMethod.POST)
+    public boolean actionPostLinkNumberLinkVisitsIncrease(@RequestBody Map<String, Object> request) {
+        linkService.increaseNumberLinkVisits(ObjUtils.asLong(request, "id"));
+        return true;
     }
 }

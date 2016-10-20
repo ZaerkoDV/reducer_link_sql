@@ -1,57 +1,51 @@
 extends ./partials/layout
 
 block layoutBody
-    div
-        div
-            .navbar.navbar-default.navbar-static-top
+    div(ng-controller="LinkController")
+        a(ui-sref="link-list") 
+            .navbar.navbar-default.navbar-static-top(style="overflow-x: hidden;")
                 .container-fluid
                     .navbar-header
-                        .span.navbar-brand Bear Shop Market
-                    ul.nav.navbar-nav.navbar-right
-                        li
-                            a(ng-click="logout()")
-                                span.glyphicon.glyphicon-log-out Logout
+                        .span.navbar-brand Reducer Link
+                    .nav.navbar-nav.navbar-right
+                        .row
+                            li
+                                a(ng-click="signup()")
+                                    span.glyphicon.glyphicon-user Signup &nbsp
+                                a(ng-click="login()")
+                                    span.glyphicon.glyphicon-log-in Login &nbsp
             .container-fluid
                 .row
                     div(class="col-md-2")
                         ui(class="nav nav-pills nav-stacked")
                             li(class="active")
-                                a(href="#") Suppliers
+                                a(href="#") Tags
                             li
-                                a(href="#") Locations
-                            li
-                                a(href="#") Units
-                            li
-                                a(href="#") Orders
-                    div(class="col-md-10")
-                        h3(style="margin-top:0;") Products
-                        button.btn.btn-primary.btn-md(ng-click="createProduct()") New Product
+                                a(href="#") Search
                     div(class="col-md-10")
                         div &nbsp
                     div(class="col-md-10")
                         table.table-bordered
                             thead
                                 tr
-                                    th N
-                                    th Created
-                                    th Title
-                                    th Supplier
-                                    th City
-                                    th Def.Price
-                                    th Number Of Views
-                                    th Number Of Purchases
-                                    th Edit
-                            tbody(ng-repeat="product in productList")
-                                tr(ng-repeat="item in product")
-                                    td {{ item.id }}
-                                    td {{ item.createdAtTimestamp | date: "yyyy-MM-dd" }}
-                                    td {{ item.title }}
-                                    td {{ item.supplierName }}
-                                    td {{ item.city.name }}
-                                    td {{ item.defaultPrice }}
-                                    td {{ item.numberOfViews }}
-                                    td {{ item.numberOfPurchases }}
+                                    th(style="min-width: 50px; text-align: center;") N
+                                    th(style="min-width: 250px; text-align: center;") Url Shot
+                                    th(style="min-width: 100px; text-align: center;") Tag
+                                    th(style="min-width: 400px; text-align: center;") Comment
+                                    th(style="min-width: 100px; text-align: center;") Created
+                                    th(style="min-width: 100px; text-align: center;") Sum Click
+                                    th(style="min-width: 100px; text-align: center;") About Author
+                                    th(style="min-width: 20px; text-align: center;") Link Plea
+                            tbody(ng-repeat="item in linkHistoryList")
+                                tr(style="text-align: center; vertical-align: middle;line-height: 40px;")
+                                    td {{ item.idLink }}
                                     td
-                                        a.span.glyphicon.glyphicon-pencil(ng-click="editProduct(item.id)")
-                                        a.span.glyphicon.glyphicon-trash(ng-click="deleteProduct(item.id)")
-                                
+                                        a(ng-click="increseClickNumber(item.idLink)" href="{{ item.urlShort }}") {{ item.urlShort }}
+                                    td {{ item.tag }}
+                                    td {{ item.comment }}
+                                    td {{ item.createdAtTimestamp | date: "yyyy-MM-dd" }}
+                                    td {{ item.sumClick }}
+                                    td   
+                                        a.span.glyphicon.glyphicon-question-sign(ng-click="authorInfo(item.idUser)")                              
+                                    td
+                                        a.span.glyphicon.glyphicon-alert(ng-click="createComplain(item.idLink)")

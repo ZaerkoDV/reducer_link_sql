@@ -5,14 +5,14 @@ var HttpInterceptor = function($q) {
         request: function(config) {
             if (config.url.startsWith("/views/")) {
                 config.url = "%URL_PREFIX_FRONT%" + config.url;
-            } else if (config.url.startsWith("/admin/")) {
+            } else if (config.url.startsWith("/backend/")) {
                 config.url = "%URL_PREFIX_BACK%" + config.url;
             }
 
             return config;
         },
         response: function(response) {
-            if (response.config.url.startsWith("%URL_PREFIX_BACK%/admin/")) {
+            if (response.config.url.startsWith("%URL_PREFIX_BACK%/backend/")) {
                 if (response.data.status === "ok") {
                     return response.data.data;
                 }
@@ -23,7 +23,7 @@ var HttpInterceptor = function($q) {
             return response;
         },
         responseError: function(rejection) {
-            if (rejection.config.url.startsWith("%URL_PREFIX_BACK%/admin/")) {
+            if (rejection.config.url.startsWith("%URL_PREFIX_BACK%/backend/")) {
                 if (typeof rejection.data === "object" && rejection.data.status === "error") {
                     return $q.reject(rejection.data);
                 }

@@ -26,6 +26,7 @@ import com.instinctools.reducerlink.service.UserService;
 import com.instinctools.reducerlink.service.support.ObjUtils;
 
 @Controller
+@RequestMapping(value="backend/user")
 public class UserController extends BaseController {
     private static final String ACTIVE = "active";
     //private static final String BLOCKED = "blocked";
@@ -41,7 +42,7 @@ public class UserController extends BaseController {
     @Autowired
     private UserPhotoService userPhotoService;
 
-    @RequestMapping(value = "user/byId/get", method = RequestMethod.POST)
+    @RequestMapping(value = "/byId/get", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserByIdGet(@RequestBody Map<String, Object> request) {
         User user = userService.getUserById(
             ObjUtils.asLong(request, "id")
@@ -57,7 +58,7 @@ public class UserController extends BaseController {
         ));
     }
 
-    @RequestMapping(value = "user/common/signup", method = RequestMethod.POST)
+    @RequestMapping(value = "/common/signup", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserFullCreate(@RequestBody Map<String, Object> request) {
         return buildValidationResult(
             userService.signup((new UserSecurity())
@@ -72,7 +73,7 @@ public class UserController extends BaseController {
         )), userSecurity -> toMap("id", userSecurity.getUser().getId()));
     }
 
-    @RequestMapping(value = "user/common/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/common/update", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserCommonUpdate(@RequestBody Map<String, Object> request) {
         return buildValidationResult(
             userService.update((new User())
@@ -85,7 +86,7 @@ public class UserController extends BaseController {
         ), user -> toMap("id", user.getId()));
     }
 
-    @RequestMapping(value = "user/common/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/common/delete", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserCommonDelete(@RequestBody Map<String, Object> request) {
         List<Link> dependentLinkList  = userService.deleteUser(ObjUtils.asLong(request, "id"));
 
@@ -102,7 +103,7 @@ public class UserController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "user/autorization/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/autorization/login", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserAutorizationLogin(@RequestBody Map<String, Object> request) {
         return buildValidationResult(userService.login(
             ObjUtils.asString(request, "login"),
@@ -110,14 +111,14 @@ public class UserController extends BaseController {
         ));
     }
 
-    @RequestMapping(value = "user/autorization/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/autorization/logout", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserAutorizationLogout(@RequestBody Map<String, Object> request) {
         return buildValidationResult(userService.logout(
             ObjUtils.asString(request, "token")
         ));
     }
 
-    @RequestMapping(value = "user/byLastName/getList", method = RequestMethod.POST)
+    @RequestMapping(value = "/byLastName/getList", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserByLastNameGetList(@RequestBody Map<String, Object> request) {
         return buildPagedResult(userService.getListUserByLastName((new User())
             .setLastName(ObjUtils.asString(request, "lastName")),
@@ -132,7 +133,7 @@ public class UserController extends BaseController {
         ));
     }
 
-    @RequestMapping(value = "user/withStatus/getList", method = RequestMethod.POST)
+    @RequestMapping(value = "/withStatus/getList", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserWithStatusGetList(@RequestBody Map<String, Object> request) {
         return buildPagedResult(userService.getListUserWithStatus((new User())
             .setStatus(ObjUtils.asString(request, "status", ACTIVE)),
@@ -149,7 +150,7 @@ public class UserController extends BaseController {
         ));
     }
 
-    @RequestMapping(value = "user/corespondence/get", method = RequestMethod.POST)
+    @RequestMapping(value = "/corespondence/get", method = RequestMethod.POST)
        public ResponseEntity<?> actionPostUserCorespondenceGet(@RequestBody Map<String, Object> request) {
            List<UserCorespondence> listUserCorespondence = userCorespondenceService.getListUserCorespondenceByIdUser(
                ObjUtils.asLong(request, "id")
@@ -166,7 +167,7 @@ public class UserController extends BaseController {
            );
     }
 
-    @RequestMapping(value = "user/corespondence/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/corespondence/create", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserCorespondenceCreate(@RequestBody Map<String, Object> request) {
         return buildValidationResult(
             userCorespondenceService.createUserCorespondence((new UserCorespondence())
@@ -182,7 +183,7 @@ public class UserController extends BaseController {
             ));
     }
 
-    @RequestMapping(value = "user/corespondence/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/corespondence/update", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserCorespondenceUpdate(@RequestBody Map<String, Object> request) {
         return buildValidationResult(
             userCorespondenceService.updateUserCorespondence((new UserCorespondence())
@@ -197,19 +198,19 @@ public class UserController extends BaseController {
             ));
     }
 
-    @RequestMapping(value = "user/corespondence/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/corespondence/delete", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserCorespondenceDelete(@RequestBody Map<String, Object> request) {
         return buildOk(userCorespondenceService.deleteUserCorespondence(
             ObjUtils.asLong(request, "id")
         ));
     }
 
-    @RequestMapping(value = "user/photo/get/{idPhoto}", method = RequestMethod.GET)
+    @RequestMapping(value = "/photo/get/{idPhoto}", method = RequestMethod.GET)
     public BufferedImage actionPostUserPhotoGet(@PathVariable("idPhoto") Long idPhoto) {
         return userPhotoService.getPhotoById(idPhoto);
     }
     //300 300
-    @RequestMapping(value = "user/photo/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/photo/create", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserPhotoCreate(@RequestParam("id") Long idUser, @RequestParam("file") MultipartFile file) {
         byte[] imageFile;
 
@@ -231,7 +232,7 @@ public class UserController extends BaseController {
         ));
     }
 
-    @RequestMapping(value = "user/photo/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/photo/delete", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserPhotoDelete(@RequestBody Map<String, Object> request) {
         return buildOk(userPhotoService.deleteUserPhoto(
             ObjUtils.asLong(request, "id")
