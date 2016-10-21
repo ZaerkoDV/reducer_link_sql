@@ -1,6 +1,6 @@
 {
-    "name": "project",
-    "dependencies": {
-        "bootstrap": "3.3.7"
-    }
+  "name": "project",
+  "dependencies": {
+    "bootstrap": "3.3.7"
+  }
 }

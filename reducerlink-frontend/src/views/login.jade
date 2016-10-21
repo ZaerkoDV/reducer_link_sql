@@ -1,7 +1,7 @@
 extends ../partials/layout
 
 block layoutBody
-    div(ng-controller="LoginController")
+    div(ng-controller="UserController")
         a(ui-sref="login") 
             .container
                 .row
@@ -10,13 +10,13 @@ block layoutBody
                             form.form-horizontal(name="loginForm" novalidate)
                                 .fieldset
                                     legend Login Form
-                                    .form-group.has-success(ng-class="{ 'has-error' : loginForm.email.$invalid && !userForm.email.$pristine }")
-                                        label.col-lg-2.control-label(for="email") Email
+                                    .form-group.has-success(ng-class="{ 'has-error' : loginForm.login.$invalid && !loginForm.login.$pristine }")
+                                        label.col-lg-2.control-label(for="login") Login
                                         div.col-lg-9
-                                            input.form-control(type="email" name="email" ng-model="login.email" ng-minlength="5" ng-maxlength="20" placeholder="Enter email")
-                                            p.help-block(ng-show="loginForm.email.$invalid && !loginForm.email.$pristine") Enter a valid email.
-                                            p.help-block(ng-show="loginForm.email.$error.minlength") Email is too short.
-                                            p.help-block(ng-show="loginForm.email.$error.maxlength") Email is too long.
+                                            input.form-control(type="text" name="login" ng-model="login.login" ng-minlength="5" ng-maxlength="20" placeholder="Enter login")
+                                            p.help-block(ng-show="loginForm.login.$invalid && !loginForm.login.$pristine") Enter a valid login.
+                                            p.help-block(ng-show="loginForm.login.$error.minlength") Login is too short.
+                                            p.help-block(ng-show="loginForm.login.$error.maxlength") Login is too long.
                                     .form-group.has-success(ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine }")
                                         label.col-lg-2.control-label(for="password") Password
                                         div.col-lg-9

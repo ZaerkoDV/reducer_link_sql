@@ -94,7 +94,7 @@ public class LinkController extends BaseController {
             "sumClick", linkHistory.getSumClick(),
             "idUser", linkHistory.getLink().getUser().getId()
         ));
-     }
+    }
 
     @RequestMapping(value = "/byTag/getList", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostLinkByTagGetList(@RequestBody Map<String, Object> request) {

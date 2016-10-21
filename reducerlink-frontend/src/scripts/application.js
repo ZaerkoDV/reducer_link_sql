@@ -2,7 +2,8 @@
 
 var angular = require("angular");
 var angularui = require("angular-ui-router");
-var app = angular.module("app", ["ui.router"]);
+var angulatbootstrap = require("angular-bootstrap");
+var app = angular.module("app", ["ui.router", "ui.bootstrap", "ui.bootstrap.tpls"]);
 
 app.config([
     "$stateProvider",
@@ -37,17 +38,18 @@ app.config([
                 controller: "UserController"
             } }
         });
+        $stateProvider.state("user-link-list", {
+            url: "/user-link-list/:token",
+            views: { "": {
+                templateUrl: "/views/user-link-list.html",
+                controller: "UserController"
+            } },
+            params: { token: "" }
+        });
         $stateProvider.state("user-edit-profile", {
             url: "/user-edit-profile",
             views: { "": {
                 templateUrl: "/views/user-edit-profile.html",
-                controller: "UserController"
-            } }
-        });
-        $stateProvider.state("user-link-list", {
-            url: "/user-link-list",
-            views: { "": {
-                templateUrl: "/views/user-link-list.html",
                 controller: "UserController"
             } }
         });

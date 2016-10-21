@@ -9,6 +9,7 @@ import com.instinctools.reducerlink.service.support.ValidationResult;
 
 public interface UserService {
     public User getUserById(Long idUser);
+    public User getUserByToken(String token);
     public ValidationResult<UserSecurity> signup(UserSecurity userSecurity);
     public ValidationResult<User> update(User inputUser);
     public List<Link> deleteUser(Long idUser);

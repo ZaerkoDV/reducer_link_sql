@@ -58,6 +58,15 @@ public class UserController extends BaseController {
         ));
     }
 
+    @RequestMapping(value = "/byToken/getId", method = RequestMethod.POST)
+    public ResponseEntity<?> actionPostUserByTokinGetId(@RequestBody Map<String, Object> request) {
+        User user = userService.getUserByToken(ObjUtils.asString(request, "token"));
+
+        return buildOk(toMap(
+            "id", user.getId()
+        ));
+    }
+
     @RequestMapping(value = "/common/signup", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserFullCreate(@RequestBody Map<String, Object> request) {
         return buildValidationResult(

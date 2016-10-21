@@ -1,4 +1,59 @@
 extends ../partials/layout
 
 block layoutBody
-   
+    div(ng-controller="UserController")
+        a(ui-sref="signup") 
+            .container
+                .row
+                    .col-lg-8.col-lg-offset-2
+                        .well(style="margin-top: 200px;")
+                            form.form-horizontal(name="signupForm" novalidate)
+                                .fieldset
+                                    legend Sign Up Form
+                                    .form-group.has-success(ng-class="{ 'has-error' : signupForm.userSecurity.user.firstName.$invalid && !signupForm.userSecurity.user.firstName.$pristine }")
+                                        label.col-lg-2.control-label(for="firstName") First Name
+                                        div.col-lg-9
+                                            input.form-control(type="text" name="firstName" ng-model="userSecurity.user.firstName" ng-minlength="1" ng-maxlength="15"
+                                            onkeypress="return !(event.charCode >= 47 && event.charCode <= 57)" placeholder="Enter First Name")
+                                            p.help-block(ng-show="signupForm.userSecurity.user.firstName.$error.minlength") First name is too short.
+                                            p.help-block(ng-show="signupForm.userSecurity.user.firstName.$error.maxlength") First Name is too long.
+                                    .form-group.has-success(ng-class="{ 'has-error' : signupForm.userSecurity.user.lastName.$invalid && !signupForm.userSecurity.user.lastName.$pristine }")
+                                        label.col-lg-2.control-label(for="lastName") Last Name
+                                        div.col-lg-9
+                                            input.form-control(type="text" name="lastName" ng-model="userSecurity.user.lastName" ng-minlength="1" ng-maxlength="15"
+                                            onkeypress="return !(event.charCode >= 47 && event.charCode <= 57)" placeholder="Enter Last Name")
+                                            p.help-block(ng-show="signupForm.userSecurity.user.lastName.$error.minlength") Last name is too short.
+                                            p.help-block(ng-show="signupForm.userSecurity.user.lastName.$error.maxlength") Last Name is too long.
+                                    .form-group.has-success(ng-class="{ 'has-error' : signupForm.userSecurity.user.middleName.$invalid && !signupForm.userSecurity.user.middleName.$pristine }")
+                                        label.col-lg-2.control-label(for="middleName") Middle Name
+                                        div.col-lg-9
+                                            input.form-control(type="text" name="middleName" ng-model="userSecurity.user.middleName" ng-maxlength="15"
+                                            onkeypress="return !(event.charCode >= 47 && event.charCode <= 57)" placeholder="Enter Middle Name")
+                                            p.help-block(ng-show="signupForm.userSecurity.user.middleName.$error.maxlength") Last Name is too long.
+                                    .form-group.has-success
+                                        label.col-lg-2.control-label(for="birth") Birth
+                                        div.col-lg-9
+                                            div.input-group
+                                                input.form-control(type="text" uib-datepicker-popup ng-model="userSecurity.user.birth"
+                                                is-open="popup1.opened" datepicker-options="dateOptions" ng-required="false")
+                                                span.input-group-btn
+                                                    button.btn.btn-large.btn-primary(ng-click="open1()")
+                                                        i.glyphicon.glyphicon-calendar
+                                    .form-group.has-success(ng-class="{ 'has-error' : signupForm.userSecurity.login.$invalid && !signupForm.userSecurity.login.$pristine }")
+                                        label.col-lg-2.control-label(for="login") Login
+                                        div.col-lg-9
+                                            input.form-control(type="text" name="login" ng-model="userSecurity.login" ng-minlength="5" ng-maxlength="20" placeholder="Enter login")
+                                            p.help-block(ng-show="signupForm.userSecurity.login.$invalid && !signupForm.userSecurity.login.$pristine") Enter a valid login.
+                                            p.help-block(ng-show="signupForm.userSecurity.login.$error.minlength") Login is too short.
+                                            p.help-block(ng-show="signupForm.userSecurity.login.$error.maxlength") Login is too long.
+                                    .form-group.has-success(ng-class="{ 'has-error' : signupForm.userSecurity.password.$invalid && !signupForm.userSecurity.password.$pristine }")
+                                        label.col-lg-2.control-label(for="password") Password
+                                        div.col-lg-9
+                                            input.form-control(type="text" name="password" ng-model="userSecurity.password" ng-minlength="2" ng-maxlength="10" placeholder="Enter password")
+                                            p.help-block(ng-show="signupForm.userSecurity.password.$error.minlength") Password is too short.
+                                            p.help-block(ng-show="signupForm.userSecurity.password.$error.maxlength") Password is too long.
+                                                        
+                                    .form-group(style="margin-top: 5px;")
+                                        .col-md-offset-9.col-md-2
+                                            button.btn.btn-large.btn-primary.btn-block(type="submit", ng-click="signup()",
+                                            ng-disabled="!userSecurity.login|| !userSecurity.password||!userSecurity.user.lastName||!userSecurity.user.firstName") Save

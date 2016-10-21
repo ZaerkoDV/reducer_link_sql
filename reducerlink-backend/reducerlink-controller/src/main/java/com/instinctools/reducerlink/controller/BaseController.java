@@ -113,13 +113,9 @@ public class BaseController {
         logger.error("Unhandled exception occured at URL \"" + request.getRequestURL() + "\"", e);
         String message;
 
-        // if (isInDevelopmentMode()) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw, true));
-            message = sw.getBuffer().toString();
-        // } else {
-            // message = null;
-        // }
+        StringWriter sw = new StringWriter();
+        e.printStackTrace(new PrintWriter(sw, true));
+        message = sw.getBuffer().toString();
 
         sendRawResponse(response, new AppResponse(AppResponse.STATUS_ERROR, ERROR_SERVER, message));
     }

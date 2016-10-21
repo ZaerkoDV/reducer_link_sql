@@ -44,6 +44,12 @@ public class UserServiceImpl extends AuthorizedService implements UserService {
     }
 
     @Override
+    public User getUserByToken(String token) {
+        UserSecurity u = ensureFound(ensureUserSecurity(token));
+        return u.getUser();
+    }
+
+    @Override
     public ValidationResult<UserSecurity> signup(UserSecurity inputUserSecurity) {
         ValidationResult<UserSecurity> result = validate(inputUserSecurity, new ValidationResult<UserSecurity>());
 

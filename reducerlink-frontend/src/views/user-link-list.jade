@@ -1,3 +1,47 @@
 extends ../partials/layout
 
 block layoutBody
+    div(ng-controller="UserController")
+        a(ui-sref="user-link-list") 
+            .navbar.navbar-default.navbar-static-top(style="overflow-x: hidden;")
+                .container-fluid
+                    .navbar-header
+                        .span.navbar-brand Reducer Link
+                    .nav.navbar-nav.navbar-right
+                        .row
+                            li
+                                a(ng-click="logout()")
+                                    span.glyphicon.glyphicon-user Signup &nbsp
+            .container-fluid
+                .row
+                    div(class="col-md-2")
+                        ui(class="nav nav-pills nav-stacked")
+                            li(class="active")
+                                a(href="#") Tags
+                            li
+                                a(href="#") Search
+                    div(class="col-md-10")
+                        div &nbsp
+                    div(class="col-md-10")
+                        table.table-bordered
+                            thead
+                                tr
+                                    th(style="min-width: 50px; text-align: center;") N
+                                    th(style="min-width: 250px; text-align: center;") Url Shot
+                                    th(style="min-width: 100px; text-align: center;") Tag
+                                    th(style="min-width: 400px; text-align: center;") Comment
+                                    th(style="min-width: 100px; text-align: center;") Created
+                                    th(style="min-width: 100px; text-align: center;") Sum Click
+                                    th(style="min-width: 100px; text-align: center;") Edit
+                            tbody(ng-repeat="item in userLinkList")
+                                tr(style="text-align: center; vertical-align: middle;line-height: 40px;")
+                                    td {{ item.idLink }}
+                                    td
+                                        a(ng-click="increseClickNumber(item.idLink)" href="{{ item.urlShort }}") {{ item.urlShort }}
+                                    td {{ item.tag }}
+                                    td {{ item.comment }}
+                                    td {{ item.createdAtTimestamp | date: "yyyy-MM-dd" }}
+                                    td {{ item.sumClick }}
+                                    td
+                                        a.span.glyphicon.glyphicon-pencil(ng-click="deleteLink(item.idLink)")
+                                        a.span.glyphicon.glyphicon-trash(ng-click="editLink(item.idLink)")

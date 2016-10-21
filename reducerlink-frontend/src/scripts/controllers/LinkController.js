@@ -42,6 +42,14 @@ var LinkController = function($scope, $state, $window, AppService, LinkService) 
             }
         );
     };
+
+    $scope.reditectToSignup = function() {
+        $state.go("signup");
+    };
+
+    $scope.reditectToLogin = function() {
+        $state.go("login");
+    };
 };
 
 module.exports = ["$scope", "$state", "$window", "AppService", "LinkService", LinkController];
