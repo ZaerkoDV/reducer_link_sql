@@ -19,6 +19,14 @@ var UserService = function($http) {
         return $http.post("/backend/link/byIdUser/getList", requirements);
     };
 
+    user.createLink = function(requirements) {
+        return $http.post("/backend/link/new/create", requirements);
+    };
+
+    user.getUserById = function(requirements) {
+        return $http.post("/backend/user/byId/get", requirements);
+    };
+
     return user;
 };
 

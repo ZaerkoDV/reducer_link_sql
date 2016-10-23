@@ -46,19 +46,21 @@ app.config([
             } },
             params: { token: "" }
         });
-        $stateProvider.state("user-edit-profile", {
-            url: "/user-edit-profile",
+        $stateProvider.state("user-profile-edit", {
+            url: "/user-profile-edit/:token",
             views: { "": {
-                templateUrl: "/views/user-edit-profile.html",
+                templateUrl: "/views/user-profile-edit.html",
                 controller: "UserController"
-            } }
+            } },
+            params: { token: "" }
         });
         $stateProvider.state("user-link-edit", {
-            url: "/user-link-edit",
+            url: "/user-link-edit/:token",
             views: { "": {
                 templateUrl: "/views/user-link-edit.html",
                 controller: "UserController"
-            } }
+            } },
+            params: { token: "" }
         });
         $urlRouterProvider.otherwise("/");
         $httpProvider.interceptors.push(require("./misc/HttpInterceptor"));

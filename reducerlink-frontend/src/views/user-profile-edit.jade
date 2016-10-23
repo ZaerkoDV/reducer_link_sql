@@ -1,8 +1,8 @@
 extends ../partials/layout
 
 block layoutBody
-    div(ng-controller="ProductController")
-        a(ui-sref="product-create" ui-sref-opts="{reload: true}")
+    div(ng-controller="UserController")
+        a(ui-sref="user-profile-edit" ui-sref-opts="{reload: true}")
             .navbar.navbar-default.navbar-static-top
                 .container-fluid
                     .navbar-header
@@ -16,120 +16,55 @@ block layoutBody
                     .col-md-2
                         ui(class="nav nav-pills nav-stacked")
                             li(class="active")
-                                a(href="#") Suppliers
+                                a(ng-click="redirectToUserLinkList()") Link List
                             li
-                                a(href="#") Locations
-                            li
-                                a(href="#") Units
-                            li
-                                a(href="#") Orders
+                                a(ng-click="reditectToLinkEdit()") New Link
                     .col-md-10
-                        form.form-horizontal(name="productForm" novalidate)
-                             .fieldset
-                                .form-group.has-success(ng-class="{ 'has-error' : productForm.title.$invalid && !productForm.title.$pristine }")
-                                    .col-md-6.col-xs-12
-                                        label.control-label.col-lg-2(for="title") Title
-                                        .col-lg-8
-                                            input.form-control(type="test" name="title" ng-model="product.title" ng-minlength="1" ng-maxlength="10" placeholder="Enter valid title")
-                                            p.help-block(ng-show="productForm.title.$invalid && !productForm.title.$pristine") Enter a valid title
-                                            p.help-block(ng-show="productForm.title.$error.minlength") Title is too short.
-                                            p.help-block(ng-show="productForm.title.$error.maxlength") Title is too long.
+                        form.form-horizontal(name="profileForm" novalidate)
+                            .fieldset
 
-                                .form-group.has-success(ng-class="{ 'has-error' : productForm.teaser.$invalid && !productForm.teaser.$pristine }")
-                                    .col-md-6.col-xs-12
-                                        label.control-label.col-lg-2(for="teaser") Teaser
-                                        .col-lg-8
-                                            input.form-control(type="text" name="teaser" ng-model="product.teaser" ng-minlength="1" ng-maxlength="10" placeholder="Enter valid teaser")
-                                            p.help-block(ng-show="productForm.teaser.$invalid && !productForm.teaser.$pristine") Enter a valid teaser
-                                            p.help-block(ng-show="productForm.teaser.$error.minlength") Teaser is too short.
-                                            p.help-block(ng-show="productForm.teaser.$error.maxlength") Teaser is too long.
-
-                                .form-group.has-success(ng-class="{ 'has-error' : productForm.discription.$invalid && !productForm.discription.$pristine }")
-                                    .col-md-6.col-xs-12
-                                        label.control-label.col-lg-2(for="discription") Discription
-                                        .col-lg-8
-                                            textarea(type="text", rows="5", cols="65", name="description" ng-maxlength="200" ng-model="product.description" placeholder="Enter valid discription")
-                                            p.help-block(ng-show="productForm.description.$error.maxlength") Description is too long.
-
+                                //-    .form-group.has-success
+                                //-        .col-lg-8
+                                //-            img(ng-src="{{userPhoto.path}}" height="150px" width="150px")
+                                //-            a.span.glyphicon.glyphicon-remove(ng-click="deletePhotoById(userPhoto.id)" style="position: absolute; top: 0;")
+                                //-    .form-group.has-success
+                                //-        .col-lg-8
+                                //-            label(class="btn btn-primary")
+                                //-                input(type="file" id="photo" style="display: none;" onchange="angular.element(this).scope().loadUserPhoto()") 
+                                //-                | Browse&hellip;  
+                                .form-group.has-success(ng-class="{ 'has-error' : profileForm.userSecurity.user.firstName.$invalid && !profileForm.userSecurity.user.firstName.$pristine }")
+                                    label.col-lg-2.control-label(for="firstName") First Name
+                                    div.col-lg-9
+                                        input.form-control(type="text" name="firstName" ng-model="userSecurity.user.firstName" ng-minlength="1" ng-maxlength="15"
+                                        onkeypress="return !(event.charCode >= 47 && event.charCode <= 57)" placeholder="Enter First Name")
+                                        p.help-block(ng-show="profileForm.userSecurity.user.firstName.$error.minlength") First name is too short.
+                                        p.help-block(ng-show="profileForm.userSecurity.user.firstName.$error.maxlength") First Name is too long.
+                                
+                                .form-group.has-success(ng-class="{ 'has-error' : profileForm.userSecurity.user.lastName.$invalid && !profileForm.userSecurity.user.lastName.$pristine }")
+                                    label.col-lg-2.control-label(for="lastName") Last Name
+                                    div.col-lg-9
+                                        input.form-control(type="text" name="lastName" ng-model="userSecurity.user.lastName" ng-minlength="1" ng-maxlength="15"
+                                        onkeypress="return !(event.charCode >= 47 && event.charCode <= 57)" placeholder="Enter Last Name")
+                                        p.help-block(ng-show="profileForm.userSecurity.user.lastName.$error.minlength") Last name is too short.
+                                        p.help-block(ng-show="profileForm.userSecurity.user.lastName.$error.maxlength") Last Name is too long.
+                               
+                               .form-group.has-success(ng-class="{ 'has-error' : profileForm.userSecurity.user.middleName.$invalid && !profileForm.userSecurity.user.middleName.$pristine }")
+                                    label.col-lg-2.control-label(for="middleName") Middle Name
+                                    div.col-lg-9
+                                        input.form-control(type="text" name="middleName" ng-model="userSecurity.user.middleName" ng-maxlength="15"
+                                        onkeypress="return !(event.charCode >= 47 && event.charCode <= 57)" placeholder="Enter Middle Name")
+                                        p.help-block(ng-show="profileForm.userSecurity.user.middleName.$error.maxlength") Last Name is too long.
+                                
                                 .form-group.has-success
-                                    .col-lg-8
-                                        table.table-hover
-                                            tr
-                                                td(ng-repeat="tempImage in tempImageList")
-                                                    img(ng-src="{{tempImage.path}}" height="150px" width="150px")
-                                                    a.span.glyphicon.glyphicon-remove(ng-click="deleteImageById(tempImageList[$index])" style="position: absolute; top: 0;")
-                                .form-group.has-success
-                                    .col-lg-8
-                                        label(class="btn btn-primary")
-                                            input(type="file" id="photo" style="display: none;" onchange="angular.element(this).scope().uploadImage()") 
-                                            | Browse&hellip; 
+                                    label.col-lg-2.control-label(for="birth") Birth
+                                    div.col-lg-9
+                                        div.input-group
+                                            input.form-control(type="text" uib-datepicker-popup ng-model="userSecurity.user.birth"
+                                            is-open="popup1.opened" datepicker-options="dateOptions" ng-required="false")
+                                            span.input-group-btn
+                                                button.btn.btn-large.btn-primary(ng-click="open1()")
+                                                    i.glyphicon.glyphicon-calendar
 
-                                .form-group.has-success(ng-class="{ 'has-error' : productForm.unitId.$pristine && productForm.unitId.$invalid }")
-                                    .col-md-6.col-xs-12
-                                        label.control-label.col-lg-2(for="unit") Unit
-                                        .col-lg-8
-                                            select.input.form-control(type="text" name="unitId" ng-model="product.unit.id" ng-required="true")
-                                                option(ng-selected="{{product.unit.id == unit.id}}" ng-repeat="unit in unitList" value="{{unit.id}}") {{unit.name}}
-                                            p.help-block(ng-show="productForm.unitId.$pristine && productForm.unitId.$invalid") No one unit selected!
-
-                               .form-group.has-success(ng-class="{ 'has-error' : productForm.supplierId.$pristine && productForm.supplierId.$invalid }")
-                                    .col-md-6.col-xs-12
-                                        label.control-label.col-lg-2(for="supplier") Supplier
-                                        .col-lg-8
-                                            select.input.form-control(type="text" name="supplierId" ng-model="product.supplier.id" ng-required="true")
-                                                option(ng-selected="{{product.supplier.id == supplier.id}}" ng-repeat="supplier in supplierList" value="{{supplier.id}}") {{supplier.name}}
-                                            p.help-block(ng-show="productForm.supplierId.$pristine && productForm.supplierId.$invalid") No one supplier selected!
-
-                                .form-group.has-success(ng-class="{ 'has-error' : productForm.cityId.$pristine && productForm.cityId.$invalid }")
-                                    .col-md-6.col-xs-12
-                                        label.control-label.col-lg-2(for="city") City
-                                        .col-lg-8
-                                            select.input.form-control(type="text" name="cityId" ng-model="product.city.id" ng-required="true")
-                                                option(ng-selected="{{product.city.id == city.id}}" ng-repeat="city in cityList" value="{{city.id}}") {{city.name}}
-                                            p.help-block(ng-show="productForm.cityId.$pristine && productForm.cityId.$invalid") No one city selected!
-
-                                .form-group.has-success(ng-class="{ 'has-error' : productForm.defaultPrice.$invalid && !productForm.defaultPrice.$pristine }")
-                                    .col-md-6.col-xs-12
-                                        label.control-label.col-lg-2(for="defaultPrice") Default Price
-                                        .col-lg-8
-                                            input.form-control(type="number" name="defaultPrice" ng-model="product.defaultPrice" ng-required="true" placeholder="Enter valid default price")
-                                            p.help-block(ng-show="productForm.defaultPrice.$invalid && !productForm.defaultPrice.$pristine") Enter a valid default price
-
-                                .form-group
-                                    .col-md-6.col-xs-12
-                                        h3(style="margin-top:0;") Price List
-
-                        form.form-horizontal(name="tempPricePlanForm" id="tempPricePlanForm" novalidate)
-                             .fieldset
-                                .form-group.has-success(ng-class="{ 'has-error' : tempPricePlanForm.quantity.$invalid && !tempPricePlanForm.quantity.$pristine }")
-                                    .col-xs-12
-                                        table.table-hover
-                                            thead
-                                                tr
-                                                    th Quantity
-                                                    th Price Per Unit
-                                                    th Delete
-                                            tbody
-                                                tr(ng-repeat="productPrice in product.priceList")
-                                                    td {{productPrice.quantity}}
-                                                    td {{productPrice.pricePerUnit}}
-                                                    td 
-                                                        a.span.glyphicon.glyphicon-trash(ng-click="deletePricePlan(productPrice)")
-                                                tr 
-                                                    td
-                                                        input.form-control(type="number" name="quantity" form="tempPricePlanForm" ng-model="tempPricePlan.quantity" ng-required="true" placeholder="Enter quantity")
-                                                    td
-                                                        input.form-control(type="number" name="pricePerUnit" form="tempPricePlanForm" ng-model="tempPricePlan.pricePerUnit" ng-required="true" placeholder="Enter price per unit")
-                                                    td
-                                                        div(ng-show="!tempPricePlanForm.pricePerUnit.$invalid && !tempPricePlanForm.quantity.$invalid")
-                                                            a.span.glyphicon.glyphicon-plus(ng-click="addPricePlan(tempPricePlan)")
-                                                tr
-                                                    td
-                                                        p.help-block(ng-show="tempPricePlanForm.pricePerUnit.$invalid && !tempPricePlanForm.pricePerUnit.$pristine") Enter valid price per unit
-                                                        p.help-block(ng-show="tempPricePlanForm.quantity.$invalid && !tempPricePlanForm.quantity.$pristine") Enter valid quantity
-                                .form-group.has-success
-                                    .col-md-6.col-xs-12
-                                        div(ng-if="product.id==='' ")
-                                            button.btn.btn-primary.btn-md(ng-click="saveProduct()") Save
-                                        div(ng-if="product.id!=='' ")
-                                            button.btn.btn-primary.btn-md(ng-click="updateProduct()") Update
+                                .form-group(style="margin-top: 5px;")
+                                        .col-md-offset-9.col-md-2
+                                            button.btn.btn-large.btn-primary.btn-block(type="submit", ng-click="updateUserProfile()") Save

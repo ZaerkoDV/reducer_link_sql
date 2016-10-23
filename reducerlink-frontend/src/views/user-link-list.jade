@@ -17,11 +17,9 @@ block layoutBody
                     div(class="col-md-2")
                         ui(class="nav nav-pills nav-stacked")
                             li(class="active")
-                                a(href="#") Tags
+                                a(ng-click="reditectToLinkEdit()") Create Link
                             li
-                                a(href="#") Search
-                    div(class="col-md-10")
-                        div &nbsp
+                                a(ng-click="redirectToEditProfile()") Edit Profile
                     div(class="col-md-10")
                         table.table-bordered
                             thead
@@ -32,16 +30,18 @@ block layoutBody
                                     th(style="min-width: 400px; text-align: center;") Comment
                                     th(style="min-width: 100px; text-align: center;") Created
                                     th(style="min-width: 100px; text-align: center;") Sum Click
-                                    th(style="min-width: 100px; text-align: center;") Edit
-                            tbody(ng-repeat="item in userLinkList")
+                                    th(style="min-width: 100px; text-align: center;") About Author
+                                    th(style="min-width: 20px; text-align: center;") Link Plea
+                            tbody(ng-repeat="link in linkHistoryList")
                                 tr(style="text-align: center; vertical-align: middle;line-height: 40px;")
-                                    td {{ item.idLink }}
+                                    td {{ link.idLink }}
                                     td
-                                        a(ng-click="increseClickNumber(item.idLink)" href="{{ item.urlShort }}") {{ item.urlShort }}
-                                    td {{ item.tag }}
-                                    td {{ item.comment }}
-                                    td {{ item.createdAtTimestamp | date: "yyyy-MM-dd" }}
-                                    td {{ item.sumClick }}
+                                        a(ng-click="increseClickNumber(link.idLink)" href="{{ link.urlShort }}") {{ item.urlShort }}
+                                    td {{ link.tag }}
+                                    td {{ link.comment }}
+                                    td {{ link.createdAtTimestamp | date: "yyyy-MM-dd" }}
+                                    td {{ link.sumClick }}
+                                    td   
+                                        a.span.glyphicon.glyphicon-question-sign(ng-click="authorInfo(link.idUser)")                              
                                     td
-                                        a.span.glyphicon.glyphicon-pencil(ng-click="deleteLink(item.idLink)")
-                                        a.span.glyphicon.glyphicon-trash(ng-click="editLink(item.idLink)")
+                                        a.span.glyphicon.glyphicon-alert(ng-click="createComplain(link.idLink)")

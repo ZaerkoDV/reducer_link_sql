@@ -14,7 +14,7 @@ var LinkController = function($scope, $state, $window, AppService, LinkService) 
         AppService.api(
             LinkService.getFullLinkList($scope.requirements),
             function(response) {
-                console.log("Loading product list : success");
+                console.log("Loading list : success");
                 $scope.linkHistoryList = response.list;
             },
             function(error) {
