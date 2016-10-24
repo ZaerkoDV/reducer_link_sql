@@ -69,15 +69,13 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
             UserService.login(loginContext),
             function(response) {
                 $state.go("user-link-list", { token: response });
-                $scope.token.token = response;
-                $scope.getUserIdByToken();
             },
             function(error) {
                 console.log("Error login");
             }
         );
     };
-
+    /*use ng-init=getUserIdByToken() for call user-link-list state*/
     $scope.getUserIdByToken = function() {
         AppService.api(
             UserService.getUserIdByToken($scope.token),
@@ -90,7 +88,7 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
             }
         );
     };
-    // не выгружается массив
+
     $scope.getUserLinkByIdUser = function(id) {
         AppService.api(
             UserService.getAllUserLink(id),
@@ -102,6 +100,26 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
             }
         );
     };
+
+    $scope.deleteLink = function(idLink) {
+        $scope.link = {
+            id: idLink
+        };
+        AppService.api(
+            UserService.deleteLinkById($scope.link),
+            function(response) {
+                $scope.getUserIdByToken();
+                console.log("Success deleted");
+            },
+            function(error) {
+                console.log("Error load user list link");
+            }
+        );
+    };
+
+    $scope.editLink = function() {
+    };
+
     // не выводиться объект
     $scope.loadUserProfile = function() {
         AppService.api(

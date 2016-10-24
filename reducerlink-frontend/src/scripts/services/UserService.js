@@ -19,6 +19,10 @@ var UserService = function($http) {
         return $http.post("/backend/link/byIdUser/getList", requirements);
     };
 
+    user.deleteLinkById = function(requirements) {
+        return $http.post("/backend/link/byId/delete", requirements);
+    };
+
     user.createLink = function(requirements) {
         return $http.post("/backend/link/new/create", requirements);
     };

@@ -1,7 +1,7 @@
 extends ../partials/layout
 
 block layoutBody
-    div(ng-controller="UserController")
+    div(ng-controller="UserController" ng-init="getUserIdByToken()")
         a(ui-sref="user-link-list") 
             .navbar.navbar-default.navbar-static-top(style="overflow-x: hidden;")
                 .container-fluid
@@ -36,18 +36,16 @@ block layoutBody
                                     th(style="min-width: 400px; text-align: center;") Comment
                                     th(style="min-width: 100px; text-align: center;") Created
                                     th(style="min-width: 100px; text-align: center;") Sum Click
-                                    th(style="min-width: 100px; text-align: center;") About Author
-                                    th(style="min-width: 20px; text-align: center;") Link Plea
+                                    th(style="min-width: 100px; text-align: center;") Edit
                             tbody(ng-repeat="link in linkHistoryList")
-                                tr(style="text-align: center; vertical-align: middle;line-height: 40px;")
+                                tr(style="text-align: center; vertical-align: middle; line-height: 40px;")
                                     td {{ link.idLink }}
                                     td
-                                        a(ng-click="increseClickNumber(link.idLink)" href="{{ link.urlShort }}") {{ item.urlShort }}
+                                        a(ng-click="increseClickNumber(link.idLink)" href="{{ link.urlShort }}") {{ link.urlShort }}
                                     td {{ link.tag }}
                                     td {{ link.comment }}
                                     td {{ link.createdAtTimestamp | date: "yyyy-MM-dd" }}
                                     td {{ link.sumClick }}
                                     td   
-                                        a.span.glyphicon.glyphicon-question-sign(ng-click="authorInfo(link.idUser)")                              
-                                    td
-                                        a.span.glyphicon.glyphicon-alert(ng-click="createComplain(link.idLink)")
+                                        a.span.glyphicon.glyphicon-remove(ng-click="deleteLink(link.idLink)") &nbsp
+                                        a.span.glyphicon.glyphicon-pencil(ng-click="editLink(link.idLink)")
