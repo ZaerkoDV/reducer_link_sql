@@ -1,3 +1,67 @@
 extends ../partials/layout
 
 block layoutBody
+    div(ng-controller="LinkController" ng-init="getListLinkByTag()")
+        a(ui-sref="link-list-search") 
+            .navbar.navbar-default.navbar-static-top(style="overflow-x: hidden;")
+                .container-fluid
+                    .navbar-header
+                        .span.navbar-brand Reducer Link
+                    .nav.navbar-nav.navbar-right
+                        .row
+                            li
+                                a(ng-click="reditectToSignup()")
+                                    span.glyphicon.glyphicon-user Signup &nbsp
+                                a(ng-click="reditectToLogin()")
+                                    span.glyphicon.glyphicon-log-in Login &nbsp
+            .container-fluid
+                .row
+                    .col-md-2
+                        ui(class="nav nav-pills nav-stacked")
+                            li
+                                .panel.panel
+                                    .panel-heading
+                                        h4(class="panel-title")
+                                           a(data-toggle="collapse" data-target="#collapseSearch") Search URL
+                                    .panel-collapse.collapse(id="collapseSearch")
+                                        .panel-body
+                                            input.form-control(type="text" id="searchCriteria" placeholder="Criteria")
+                                            br
+                                            button.btn.btn-xs.btn-primary(type="submit" style="float: right;" ng-click="search()") Search
+                            li
+                                .panel.panel
+                                    .panel-heading
+                                        h4.panel-title
+                                           a(data-toggle="collapse" ng-click="getListUniqualTag()" data-target="#collapseTag") Tag
+                                    .panel-collapse.collapse(id="collapseTag")
+                                        .panel-body(ng-show="uniqualTagList.length > 0")
+                                            div(ng-repeat="tag in uniqualTagList")
+                                                p &nbsp-&nbsp
+                                                    a(ng-click="getListLinkByTag(tag)") {{ tag }}
+                            li
+                                .panel.panel
+                                    .panel-heading
+                                        h4.panel-title
+                                           a(data-toggle="collapse" ng-click="reditectToAllLink()" data-target="#collapseTag") All Link
+                    .col-md-10
+                        table.table-bordered
+                            thead
+                                tr
+                                    th(style="min-width: 50px; text-align: center;") N
+                                    th(style="min-width: 250px; text-align: center;") Url Shot
+                                    th(style="min-width: 100px; text-align: center;") Tag
+                                    th(style="min-width: 400px; text-align: center;") Comment
+                                    th(style="min-width: 100px; text-align: center;") Created
+                                    th(style="min-width: 100px; text-align: center;") Sum Click
+                                    th(style="min-width: 100px; text-align: center;") About Author
+                            tbody(ng-repeat="item in listLinkByTag")
+                                tr(style="text-align: center; vertical-align: middle;line-height: 40px;")
+                                    td {{ item.idLink }}
+                                    td
+                                        a(ng-click="increseClickNumber(item.idLink)" href="{{ item.urlShort }}") {{ item.urlShort }}
+                                    td {{ item.tag }}
+                                    td {{ item.comment }}
+                                    td {{ item.createdAtTimestamp | date: "yyyy-MM-dd" }}
+                                    td {{ item.sumClick }}
+                                    td
+                                        a.span.glyphicon.glyphicon-question-sign(ng-click="authorInfo(item.idUser)") 

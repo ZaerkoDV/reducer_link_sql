@@ -154,8 +154,8 @@ public class LinkController extends BaseController {
         );
     }
 
-    @RequestMapping(value = "/uniqual/getTagList", method = RequestMethod.POST)
-    public ResponseEntity<?> actionPostLinkUniqualGrtTagList(@RequestBody Map<String, Object> request) {
+    @RequestMapping(value = "/uniqual/getTagList", method = RequestMethod.GET)
+    public ResponseEntity<?> actionPostLinkUniqualGrtTagList() {
         return buildOk(linkService.getListUniqueTag());
     }
 

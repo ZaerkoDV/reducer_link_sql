@@ -10,19 +10,20 @@ app.config([
     "$urlRouterProvider",
     "$httpProvider",
     function($stateProvider, $urlRouterProvider, $httpProvider) {
-        $stateProvider.state("link-list", {
-            url: "/link-list",
+        $stateProvider.state("home", {
+            url: "/home",
             views: { "": {
                 templateUrl: "/index.html",
                 controller: "LinkController"
             } }
         });
         $stateProvider.state("link-list-search", {
-            url: "/link-list-search",
+            url: "/link-list-search/:tag",
             views: { "": {
                 templateUrl: "/views/link-list-search.html",
                 controller: "LinkController"
-            } }
+            } },
+            params: { tag: "" }
         });
         $stateProvider.state("login", {
             url: "/login",

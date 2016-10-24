@@ -15,23 +15,30 @@ block layoutBody
                 .row
                     .col-md-2
                         ui(class="nav nav-pills nav-stacked")
-                            li(class="active")
-                                a(ng-click="redirectToUserLinkList()") Link List
                             li
-                                a(ng-click="reditectToLinkEdit()") New Link
+                                .panel.panel
+                                    .panel-heading
+                                        h4.panel-title
+                                           a(data-toggle="collapse" ng-click="redirectToUserLinkList()" data-target="#collapseUserLinkList") Link List
+                             li
+                                .panel.panel
+                                    .panel-heading
+                                        h4.panel-title
+                                           a(data-toggle="collapse" ng-click="reditectToLinkEdit()" data-target="#collapseNewLink") New Link
                     .col-md-10
                         form.form-horizontal(name="profileForm" novalidate)
                             .fieldset
 
-                                //-    .form-group.has-success
-                                //-        .col-lg-8
-                                //-            img(ng-src="{{userPhoto.path}}" height="150px" width="150px")
-                                //-            a.span.glyphicon.glyphicon-remove(ng-click="deletePhotoById(userPhoto.id)" style="position: absolute; top: 0;")
-                                //-    .form-group.has-success
-                                //-        .col-lg-8
-                                //-            label(class="btn btn-primary")
-                                //-                input(type="file" id="photo" style="display: none;" onchange="angular.element(this).scope().loadUserPhoto()") 
-                                //-                | Browse&hellip;  
+                                .form-group.has-success
+                                    .col-lg-8
+                                        div(ng-if="userPhoto.path!=='' ")
+                                            img(ng-src="{{userPhoto.path}}" height="150px" width="150px")
+                                            a.span.glyphicon.glyphicon-remove(ng-click="deletePhotoById(userPhoto.id)" style="position: absolute; top: 0;")
+                                .form-group.has-success
+                                    .col-lg-8
+                                        label(class="btn btn-primary")
+                                            input(type="file" id="photo" style="display: none;" onchange="angular.element(this).scope().loadUserPhoto()") 
+                                            | Browse&hellip;  
                                 .form-group.has-success(ng-class="{ 'has-error' : profileForm.userSecurity.user.firstName.$invalid && !profileForm.userSecurity.user.firstName.$pristine }")
                                     label.col-lg-2.control-label(for="firstName") First Name
                                     div.col-lg-9

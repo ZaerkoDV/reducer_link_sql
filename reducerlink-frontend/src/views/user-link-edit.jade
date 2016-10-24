@@ -16,10 +16,16 @@ block layoutBody
                 .row
                     .col-md-2
                         ui(class="nav nav-pills nav-stacked")
-                            li(class="active")
-                                a(ng-click="redirectToUserLinkList()") Link List
                             li
-                                a(href="#") Search
+                                .panel.panel
+                                    .panel-heading
+                                        h4.panel-title
+                                           a(data-toggle="collapse" ng-click="redirectToUserLinkList()" data-target="#collapseLinkList") Link List
+                            li
+                                .panel.panel
+                                    .panel-heading
+                                        h4.panel-title
+                                           a(data-toggle="collapse" ng-click="redirectToEditProfile()" data-target="#collapseEditProfile") Edit Profile
                     .col-md-10
                         form.form-horizontal(name="linkForm" novalidate)
                              .fieldset

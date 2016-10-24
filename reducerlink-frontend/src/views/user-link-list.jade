@@ -16,10 +16,16 @@ block layoutBody
                 .row
                     div(class="col-md-2")
                         ui(class="nav nav-pills nav-stacked")
-                            li(class="active")
-                                a(ng-click="reditectToLinkEdit()") Create Link
                             li
-                                a(ng-click="redirectToEditProfile()") Edit Profile
+                                .panel.panel
+                                    .panel-heading
+                                        h4.panel-title
+                                           a(data-toggle="collapse" ng-click="reditectToLinkEdit()" data-target="#collapseNewLink") New Link
+                            li
+                                .panel.panel
+                                    .panel-heading
+                                        h4.panel-title
+                                           a(data-toggle="collapse" ng-click="redirectToEditProfile()" data-target="#collapseEditProfile") Edit Profile
                     div(class="col-md-10")
                         table.table-bordered
                             thead

@@ -9,7 +9,7 @@ var LinkController = function($scope, $state, $window, AppService, LinkService) 
         pageNum: 1,
         pageSize: 4
     };
-
+    /*use ng-init="getFullLinkList()" for call this function on home state*/
     $scope.getFullLinkList = function() {
         AppService.api(
             LinkService.getFullLinkList($scope.requirements),
@@ -22,8 +22,6 @@ var LinkController = function($scope, $state, $window, AppService, LinkService) 
             }
         );
     };
-
-    $scope.getFullLinkList();
 
     $scope.numberOfClick = {
         id: ""
@@ -43,12 +41,53 @@ var LinkController = function($scope, $state, $window, AppService, LinkService) 
         );
     };
 
+    $scope.getListUniqualTag = function() {
+        AppService.api(
+            LinkService.uniqualTagList(),
+            function(response) {
+                $scope.uniqualTagList = response;
+                console.log("Loading tag list is success");
+            },
+            function(error) {
+                console.log("Loading tag list is failure");
+            }
+        );
+    };
+
+    $scope.tagListCriteria = {
+        tag: "",
+        orderBy: "id",
+        orderAsc: true
+    };
+    /*use ng-init="getListLinkByTag()"  for call this function on link-list-serach state*/
+    $scope.getListLinkByTag = function() {
+        $scope.tagListCriteria.tag = $state.params.tag;
+        AppService.api(
+            LinkService.searchLinkByTag($scope.tagListCriteria),
+            function(response) {
+                $scope.listLinkByTag = response.list;
+                console.log("Loading list link by tag is successfuly");
+            },
+            function(error) {
+                console.log("Loading list link by tag is failed");
+            }
+        );
+    };
+
+    $scope.reditectToLinkListSearch = function(tag) {
+        $state.go("link-list-search", { tag: tag });
+    };
+
     $scope.reditectToSignup = function() {
         $state.go("signup");
     };
 
     $scope.reditectToLogin = function() {
         $state.go("login");
+    };
+
+    $scope.reditectToAllLink = function() {
+        $state.go("home");
     };
 };
 

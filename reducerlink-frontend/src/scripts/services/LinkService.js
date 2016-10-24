@@ -11,6 +11,14 @@ var LinkService = function($http) {
         return $http.post("/backend/link/numberLinkVisits/increase", idLink);
     };
 
+    link.uniqualTagList = function() {
+        return $http.get("/backend/link/uniqual/getTagList");
+    };
+
+    link.searchLinkByTag = function(requirements) {
+        return $http.post("/backend/link/byTag/getList", requirements);
+    };
+
     return link;
 };
 

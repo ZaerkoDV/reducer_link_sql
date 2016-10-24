@@ -3,6 +3,8 @@
 var UserController = function($scope, $state, $window, AppService, UserService) {
     var angular = AppService.angular;
 
+    $scope.idUser = "";
+
     $scope.token = {
         token: $state.params.token
     };
@@ -20,7 +22,7 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
             firstName: "",
             lastName: "",
             middleName: "",
-            birth: 1477048727,
+            birth: 1477296578,
             status: "active"
         }
     };
@@ -32,6 +34,19 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
         user: {
             id: ""
         }
+    };
+
+    $scope.redirectToUserLinkList = function() {
+        $state.go("user-link-list", { token: $scope.token.token });
+    };
+
+    $scope.reditectToLinkEdit = function() {
+        $state.go("user-link-edit", { token: $state.params.token });
+    };
+
+    $scope.redirectToEditProfile = function() {
+        $state.go("user-profile-edit", { token: $state.params.token });
+        $scope.loadUserProfile();
     };
 
     $scope.signup = function() {
@@ -87,13 +102,70 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
             }
         );
     };
-
-    $scope.redirectToUserLinkList = function() {
-        $state.go("user-link-list", { token: $scope.token.token });
+    // не выводиться объект
+    $scope.loadUserProfile = function() {
+        AppService.api(
+            UserService.getUserIdByToken($scope.token),
+            function(response) {
+                $scope.idUser = response;
+                AppService.api(
+                    UserService.getUserById($scope.idUser),
+                    function(response) {
+                        $scope.userSecurity.user = response;
+                        console.log("Success load");
+                    },
+                    function(error) {
+                        console.log("Error load");
+                    }
+                );
+            },
+            function(error) {
+                console.log("Error load id user");
+            }
+        );
+    };
+    /*$scope.updateUserProfile = function() {
+    };*/
+    $scope.userPhoto = {};
+    $scope.loadUserPhoto = function() {
+        AppService.api(
+            UserService.getUserIdByToken($scope.token),
+            function(response) {
+                var photo = jQuery("#photo").get(0);
+                var fd = new FormData();
+                fd.append("file", photo.files[0]);
+                fd.append("id", response.id);
+                AppService.api(
+                    UserService.createPhoto(fd),
+                    function(response) {
+                        $scope.userPhoto.id = response.id;
+                        $scope.userPhoto.name = photo.files[0].name;
+                        $scope.userPhoto.path = "%URL_PREFIX_BACK%/backend/photo/get/" + response.id;
+                    },
+                    function(error) {
+                        console.log("Photo Load is failure");
+                    }
+                );
+            },
+            function(error) {
+                console.log("Error load id user");
+            }
+        );
     };
 
-    $scope.reditectToLinkEdit = function() {
-        $state.go("user-link-edit", { token: $state.params.token });
+    $scope.deletePhotoById = function(idPhoto) {
+        $scope.photo = {
+            id: idPhoto
+        };
+        AppService.api(
+            UserService.deletePhotoById($scope.photo),
+            function(response) {
+                console.log("Delete photo success");
+            },
+            function(error) {
+                console.log("Delete photo failure");
+            }
+        );
     };
 
     $scope.createLink = function() {
@@ -118,55 +190,6 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
         );
     };
 
-    $scope.redirectToEditProfile = function() {
-        $state.go("user-profile-edit", { token: $state.params.token });
-        $scope.loadUserProfile();
-    };
-    //не изменяются занчения на форме хотя данные приходят
-    $scope.loadUserProfile = function() {
-        AppService.api(
-            UserService.getUserIdByToken($scope.token),
-            function(response) {
-                $scope.id = response;
-                AppService.api(
-                    UserService.getUserById($scope.id),
-                    function(response) {
-                        console.log("User load success", response);
-                    },
-                    function(error) {
-                        console.log("Error create link");
-                    }
-                );
-            },
-            function(error) {
-                console.log("Error load id user");
-            }
-        );
-    };
-
-    /*$scope.updateUserProfile = function() {
-    };*/
-
-    /*
-    $scope.userPhoto.path = {};
-    $scope.loadUserPhoto = function() {
-        var photo = jQuery("#photo").get(0);
-        var fd = new FormData();
-        fd.append("file", photo.files[0]);
-        fd.append("id", "3");
-        AppService.api(
-            ProductService.uploadImage(fd),
-            function(response) {
-                $scope.userPhoto.id = response.id,
-                $scope.userPhoto.name = photo.files[0].name,
-                $scope.userPhoto.path = "%URL_PREFIX_BACK%/backend/photo/get/" + response.id;
-            },
-            function(error) {
-                console.log("Upload is failure");
-            }
-        );
-    };
-    */
     $scope.today = function() {
         $scope.birth = new Date();
     };
