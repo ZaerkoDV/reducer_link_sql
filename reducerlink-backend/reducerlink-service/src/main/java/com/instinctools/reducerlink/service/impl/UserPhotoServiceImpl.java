@@ -35,6 +35,22 @@ public class UserPhotoServiceImpl extends AuthorizedService implements UserPhoto
     }
 
     @Override
+    public BufferedImage getUserPhotoByIdUser(Long idUser) {
+        UserPhoto userPhoto = ensureFound(userPhotoDao.getUserPhotoByIdUser(idUser));
+
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(userPhoto.getPhotoData())) {
+            return ImageIO.read(bais);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Long getIdUserPhotoByIdUser(Long idUser) {
+        return userPhotoDao.getIdUserPhotoByIdUser(idUser);
+    }
+
+    @Override
     public UserPhoto saveUserPhoto(Long idUser, long currentTimestamp, byte[] imageFile) {
         User user = ensureFound(userDao.findOne(idUser));
 

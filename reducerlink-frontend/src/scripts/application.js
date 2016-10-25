@@ -56,12 +56,12 @@ app.config([
             params: { token: "" }
         });
         $stateProvider.state("user-link-edit", {
-            url: "/user-link-edit/:token",
+            url: "/user-link-edit/:token/:idLink",
             views: { "": {
                 templateUrl: "/views/user-link-edit.html",
                 controller: "UserController"
             } },
-            params: { token: "" }
+            params: { token: "", idLink: "" }
         });
         $urlRouterProvider.otherwise("/");
         $httpProvider.interceptors.push(require("./misc/HttpInterceptor"));

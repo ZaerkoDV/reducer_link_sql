@@ -1,6 +1,5 @@
 package com.instinctools.reducerlink.dao.impl;
 
-import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -14,14 +13,22 @@ public class UserPhotoDaoImpl extends BaseDaoImpl<UserPhoto, Long> implements Us
         super(UserPhoto.class);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public List<Long> getListIdUserPhoto(Long idUser) {
+    public UserPhoto getUserPhotoByIdUser(Long idUser) {
         Criteria criteria = createCriteria()
-            .createAlias("user", "u")
-            .setProjection(Projections.property("id"))
-            .add(Restrictions.eq("u.id", idUser));
+        .createAlias("user", "u")
+        .add(Restrictions.eq("u.id", idUser));
 
-        return criteria.list();
+        return (UserPhoto) criteria.uniqueResult();
+    }
+
+    @Override
+    public Long getIdUserPhotoByIdUser(Long idUser) {
+        Criteria criteria = createCriteria()
+       .createAlias("user", "u")
+       .setProjection(Projections.property("id"))
+       .add(Restrictions.eq("u.id", idUser));
+
+       return (Long) criteria.uniqueResult();
     }
 }

@@ -1,7 +1,7 @@
 extends ../partials/layout
 
 block layoutBody
-    div(ng-controller="UserController")
+    div(ng-controller="UserController" ng-init="loadLinkForEdit()")
         a(ui-sref="user-link-edit") 
             .navbar.navbar-default.navbar-static-top(style="overflow-x: hidden;")
                 .container-fluid
@@ -11,7 +11,7 @@ block layoutBody
                         .row
                             li
                                 a(ng-click="logout()")
-                                    span.glyphicon.glyphicon-user Signup &nbsp
+                                    span.glyphicon.glyphicon-log-out Logout &nbsp
             .container-fluid
                 .row
                     .col-md-2
@@ -53,5 +53,6 @@ block layoutBody
                                             p.help-block(ng-show="linkForm.link.comment.$error.maxlength") Comment is too long.
 
                                  .form-group(style="margin-top: 5px;")
-                                        .col-md-offset-9.col-md-2
-                                            button.btn.btn-large.btn-primary.btn-block(type="submit", ng-click="createLink()") Save
+                                        .col-md-offset-9.col-md-2()
+                                                button.btn.btn-primary.btn-block(type="submit", ng-show="link.id==undefined" ng-click="createLink()") Save
+                                                button.btn.btn-primary.btn-block(type="submit", ng-show="link.id!=undefined" ng-click="updateLink()") Update

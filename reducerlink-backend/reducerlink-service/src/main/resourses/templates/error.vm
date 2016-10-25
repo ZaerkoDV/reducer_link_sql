@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error occurred</title>
+</head>
+<body>
+    <h1>Error occurred</h1>
+    <p>
+        <strong>At:</strong> ${timestamp}<br />
+        <strong>Type:</strong> ${error}<br />
+        <strong>Status:</strong> ${status}<br />
+        <strong>Path:</strong> ${path}
+    </p>
+    <p>${message}</p>
+</body>
+</html>

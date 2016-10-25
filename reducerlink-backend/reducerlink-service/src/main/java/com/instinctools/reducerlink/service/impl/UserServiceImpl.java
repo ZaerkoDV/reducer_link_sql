@@ -115,7 +115,7 @@ public class UserServiceImpl extends AuthorizedService implements UserService {
     public ValidationResult<Boolean> logout(String token) {
         UserSecurity userSecurity = ensureUserSecurity(token);
 
-        userSecurity.setToken(null);
+        userSecurity.setToken(generateToken());
         userSecurityDao.save(userSecurity);
 
         return ValidationResult.<Boolean>fromResult(true);

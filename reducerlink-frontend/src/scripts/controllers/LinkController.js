@@ -65,13 +65,16 @@ var LinkController = function($scope, $state, $window, AppService, LinkService) 
         AppService.api(
             LinkService.searchLinkByTag($scope.tagListCriteria),
             function(response) {
-                $scope.listLinkByTag = response.list;
+                $scope.listLinkWithTag = response;
                 console.log("Loading list link by tag is successfuly");
             },
             function(error) {
                 console.log("Loading list link by tag is failed");
             }
         );
+    };
+
+    $scope.authorInfo = function() {
     };
 
     $scope.reditectToLinkListSearch = function(tag) {

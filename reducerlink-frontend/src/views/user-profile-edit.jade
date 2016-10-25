@@ -1,7 +1,7 @@
 extends ../partials/layout
 
 block layoutBody
-    div(ng-controller="UserController")
+    div(ng-controller="UserController" ng-init="loadUserProfile()")
         a(ui-sref="user-profile-edit" ui-sref-opts="{reload: true}")
             .navbar.navbar-default.navbar-static-top
                 .container-fluid
@@ -10,7 +10,7 @@ block layoutBody
                     ul.nav.navbar-nav.navbar-right
                         li
                             a(ng-click="logout()")
-                                span.glyphicon.glyphicon-log-out Logout
+                                span.glyphicon.glyphicon-log-out Logout &nbsp
             .container-fluid
                 .row
                     .col-md-2
@@ -31,14 +31,18 @@ block layoutBody
 
                                 .form-group.has-success
                                     .col-lg-8
-                                        div(ng-if="userPhoto.path!=='' ")
-                                            img(ng-src="{{userPhoto.path}}" height="150px" width="150px")
-                                            a.span.glyphicon.glyphicon-remove(ng-click="deletePhotoById(userPhoto.id)" style="position: absolute; top: 0;")
+                                        table.table-hover
+                                            tr
+                                                td
+                                                    img(ng-src="{{userPhoto.path}}" height="200px" width="200px")
+                                                    a.span.glyphicon.glyphicon-remove(ng-click="deletePhotoById(userPhoto.id)" style="position: absolute; top: 0;")
+                                            tr
+                                                td(style="min-width: 200px; text-align: center;")  {{ userPhoto.name }}
                                 .form-group.has-success
                                     .col-lg-8
                                         label(class="btn btn-primary")
-                                            input(type="file" id="photo" style="display: none;" onchange="angular.element(this).scope().loadUserPhoto()") 
-                                            | Browse&hellip;  
+                                            input(type="file" id="photo" style="display: none;" onchange="angular.element(this).scope().updateUserPhoto()") 
+                                            | Browse&hellip;
                                 .form-group.has-success(ng-class="{ 'has-error' : profileForm.userSecurity.user.firstName.$invalid && !profileForm.userSecurity.user.firstName.$pristine }")
                                     label.col-lg-2.control-label(for="firstName") First Name
                                     div.col-lg-9
@@ -74,4 +78,5 @@ block layoutBody
 
                                 .form-group(style="margin-top: 5px;")
                                         .col-md-offset-9.col-md-2
-                                            button.btn.btn-large.btn-primary.btn-block(type="submit", ng-click="updateUserProfile()") Save
+                                            button.btn.btn-large.btn-primary.btn-block(type="submit", ng-click="updateUserProfile()") Update
+        

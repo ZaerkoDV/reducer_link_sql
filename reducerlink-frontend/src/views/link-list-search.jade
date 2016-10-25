@@ -54,14 +54,14 @@ block layoutBody
                                     th(style="min-width: 100px; text-align: center;") Created
                                     th(style="min-width: 100px; text-align: center;") Sum Click
                                     th(style="min-width: 100px; text-align: center;") About Author
-                            tbody(ng-repeat="item in listLinkByTag")
+                            tbody(ng-repeat="linkWithTag in listLinkWithTag")
                                 tr(style="text-align: center; vertical-align: middle;line-height: 40px;")
-                                    td {{ item.idLink }}
+                                    td {{ linkWithTag.idLink }}
                                     td
-                                        a(ng-click="increseClickNumber(item.idLink)" href="{{ item.urlShort }}") {{ item.urlShort }}
-                                    td {{ item.tag }}
-                                    td {{ item.comment }}
-                                    td {{ item.createdAtTimestamp | date: "yyyy-MM-dd" }}
-                                    td {{ item.sumClick }}
+                                        a(ng-click="increseClickNumber(linkWithTag.idLink)" href="{{ linkWithTag.urlShort }}") {{ linkWithTag.urlShort }}
+                                    td {{ linkWithTag.tag }}
+                                    td {{ linkWithTag.comment }}
+                                    td {{ linkWithTag.createdAtTimestamp | date: "yyyy-MM-dd" }}
+                                    td {{ linkWithTag.sumClick }}
                                     td
-                                        a.span.glyphicon.glyphicon-question-sign(ng-click="authorInfo(item.idUser)") 
+                                        a.span.glyphicon.glyphicon-question-sign(ng-click="authorInfo(linkWithTag.idUser)") 

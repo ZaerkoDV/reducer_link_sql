@@ -11,7 +11,7 @@ block layoutBody
                         .row
                             li
                                 a(ng-click="logout()")
-                                    span.glyphicon.glyphicon-user Signup &nbsp
+                                    span.glyphicon.glyphicon-log-out Logout &nbsp
             .container-fluid
                 .row
                     div(class="col-md-2")
@@ -48,4 +48,4 @@ block layoutBody
                                     td {{ link.sumClick }}
                                     td   
                                         a.span.glyphicon.glyphicon-remove(ng-click="deleteLink(link.idLink)") &nbsp
-                                        a.span.glyphicon.glyphicon-pencil(ng-click="editLink(link.idLink)")
+                                        a.span.glyphicon.glyphicon-pencil(ng-click="reditectToLinkEdit(link.idLink)")

@@ -7,6 +7,10 @@ var UserService = function($http) {
         return $http.post("/backend/user/autorization/login", requirements);
     };
 
+    user.logout = function(requirements) {
+        return $http.post("/backend/user/autorization/logout", requirements);
+    };
+
     user.signup = function(requirements) {
         return $http.post("/backend/user/common/signup", requirements);
     };
@@ -19,6 +23,10 @@ var UserService = function($http) {
         return $http.post("/backend/link/byIdUser/getList", requirements);
     };
 
+    user.updateLinkById = function(requirements) {
+        return $http.post("/backend/link/byId/update", requirements);
+    };
+
     user.deleteLinkById = function(requirements) {
         return $http.post("/backend/link/byId/delete", requirements);
     };
@@ -27,8 +35,16 @@ var UserService = function($http) {
         return $http.post("/backend/link/new/create", requirements);
     };
 
+    user.getLinkById = function(requirements) {
+        return $http.post("/backend/link/byId/get", requirements);
+    };
+
     user.getUserById = function(requirements) {
         return $http.post("/backend/user/byId/get", requirements);
+    };
+
+    user.updateUserById = function(requirements) {
+        return $http.post("/backend/user/common/update", requirements);
     };
 
     user.createPhoto = function(requirements) {
@@ -41,6 +57,10 @@ var UserService = function($http) {
             // the boundary parameter of the request.
             headers: { "Content-Type": undefined }
         });
+    };
+
+    user.loadIdUserPhotoByIdUser = function(idUser) {
+        return $http.get("/backend/user/photo/getIdPhotoByIdUser/" + idUser);
     };
 
     user.deletePhotoById = function(requirements) {

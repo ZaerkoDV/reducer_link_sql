@@ -218,7 +218,21 @@ public class UserController extends BaseController {
     public BufferedImage actionPostUserPhotoGet(@PathVariable("idPhoto") Long idPhoto) {
         return userPhotoService.getPhotoById(idPhoto);
     }
-    //300 300
+
+    @RequestMapping(value = "/photo/getByIdUser/{idUser}", method = RequestMethod.GET)
+    public BufferedImage actionPostGetUserPhotoByIdUser(@PathVariable("idUser") Long idUser) {
+        return userPhotoService.getUserPhotoByIdUser(idUser);
+    }
+
+    @RequestMapping(value = "/photo/getIdPhotoByIdUser/{idUser}", method = RequestMethod.GET)
+    public ResponseEntity<?> actionPostGetIdUserPhotoByIdUser(@PathVariable("idUser") Long idUser) {
+        Long idUserPhoto = userPhotoService.getIdUserPhotoByIdUser(idUser);
+
+        return buildOk(toMap(
+            "id", idUserPhoto
+        ));
+    }
+
     @RequestMapping(value = "/photo/create", method = RequestMethod.POST)
     public ResponseEntity<?> actionPostUserPhotoCreate(@RequestParam("id") Long idUser, @RequestParam("file") MultipartFile file) {
         byte[] imageFile;
@@ -234,7 +248,11 @@ public class UserController extends BaseController {
             return buildError(ERROR_UPLOAD);
         }
 
-        UserPhoto userPhoto = userPhotoService.saveUserPhoto(idUser, getCurrentTimestamp(), imageFile);
+        UserPhoto userPhoto = userPhotoService.saveUserPhoto(
+            idUser,
+            getCurrentTimestamp(),
+            imageFile
+        );
 
         return buildOk(toMap(
             "id", userPhoto.getId()
