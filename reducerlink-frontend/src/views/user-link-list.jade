@@ -5,16 +5,15 @@ block layoutBody
         a(ui-sref="user-link-list") 
             .navbar.navbar-default.navbar-static-top(style="overflow-x: hidden;")
                 .container-fluid
-                    .navbar-header
+                    ul.nav.navbar-header
                         .span.navbar-brand Reducer Link
-                    .nav.navbar-nav.navbar-right
-                        .row
-                            li
-                                a(ng-click="logout()")
-                                    span.glyphicon.glyphicon-log-out Logout &nbsp
+                    ul.nav.navbar-nav.navbar-right
+                        .span.navbar-brand
+                            a(ng-click="logout()")
+                                span.glyphicon.glyphicon-log-out Logout &nbsp
             .container-fluid
                 .row
-                    div(class="col-md-2")
+                    .col-md-2
                         ui(class="nav nav-pills nav-stacked")
                             li
                                 .panel.panel
@@ -26,7 +25,7 @@ block layoutBody
                                     .panel-heading
                                         h4.panel-title
                                            a(data-toggle="collapse" ng-click="redirectToEditProfile()" data-target="#collapseEditProfile") Edit Profile
-                    div(class="col-md-10")
+                    .col-md-10
                         table.table-bordered
                             thead
                                 tr
@@ -34,7 +33,7 @@ block layoutBody
                                     th(style="min-width: 250px; text-align: center;") Url Shot
                                     th(style="min-width: 100px; text-align: center;") Tag
                                     th(style="min-width: 400px; text-align: center;") Comment
-                                    th(style="min-width: 100px; text-align: center;") Created
+                                    th(style="min-width: 200px; text-align: center;") Created
                                     th(style="min-width: 100px; text-align: center;") Sum Click
                                     th(style="min-width: 100px; text-align: center;") Edit
                             tbody(ng-repeat="link in linkHistoryList")
@@ -44,7 +43,7 @@ block layoutBody
                                         a(ng-click="increseClickNumber(link.idLink)" href="{{ link.urlShort }}") {{ link.urlShort }}
                                     td {{ link.tag }}
                                     td {{ link.comment }}
-                                    td {{ link.createdAtTimestamp | date: "yyyy-MM-dd" }}
+                                    td {{ link.createdAtTimeTimestamp | date: "dd-MM-yyyy" }}
                                     td {{ link.sumClick }}
                                     td   
                                         a.span.glyphicon.glyphicon-remove(ng-click="deleteLink(link.idLink)") &nbsp

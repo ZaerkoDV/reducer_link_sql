@@ -17,7 +17,7 @@ databaseChangeLog(logicalFilePath: 'main-1') {
                 constraints nullable: true
             }
 			
-			column name: 'birth', type: 'int', {
+			column name: 'birth', type: 'bigint', {
                 constraints nullable: false
             }	
 			
@@ -123,7 +123,7 @@ databaseChangeLog(logicalFilePath: 'main-1') {
                 constraints primaryKey: true, nullable: false
             }
 
-            column name: 'created_at_timestamp', type: 'int', {
+            column name: 'created_at_timestamp', type: 'bigint', {
                 constraints nullable: false
             }
 
@@ -305,11 +305,11 @@ databaseChangeLog(logicalFilePath: 'main-1') {
                 constraints primaryKey: true, nullable: false
             }
 
-            column name: 'created_at_timestamp', type: 'int', {
+            column name: 'created_at_timestamp', type: 'bigint', {
                 constraints nullable: false
             }
 
-            column name: 'sum_click', type: 'int', {
+            column name: 'sum_click', type: 'bigint', {
                 constraints nullable: false
             }
 

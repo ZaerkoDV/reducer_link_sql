@@ -5,10 +5,10 @@ block layoutBody
         a(ui-sref="user-profile-edit" ui-sref-opts="{reload: true}")
             .navbar.navbar-default.navbar-static-top
                 .container-fluid
-                    .navbar-header
+                    ul.nav.navbar-header
                         .span.navbar-brand Bear Shop Market
                     ul.nav.navbar-nav.navbar-right
-                        li
+                        .span.navbar-brand
                             a(ng-click="logout()")
                                 span.glyphicon.glyphicon-log-out Logout &nbsp
             .container-fluid
@@ -28,7 +28,6 @@ block layoutBody
                     .col-md-10
                         form.form-horizontal(name="profileForm" novalidate)
                             .fieldset
-
                                 .form-group.has-success
                                     .col-lg-8
                                         table.table-hover
@@ -45,7 +44,7 @@ block layoutBody
                                             | Browse&hellip;
                                 .form-group.has-success(ng-class="{ 'has-error' : profileForm.userSecurity.user.firstName.$invalid && !profileForm.userSecurity.user.firstName.$pristine }")
                                     label.col-lg-2.control-label(for="firstName") First Name
-                                    div.col-lg-9
+                                    div.col-lg-5
                                         input.form-control(type="text" name="firstName" ng-model="userSecurity.user.firstName" ng-minlength="1" ng-maxlength="15"
                                         onkeypress="return !(event.charCode >= 47 && event.charCode <= 57)" placeholder="Enter First Name")
                                         p.help-block(ng-show="profileForm.userSecurity.user.firstName.$error.minlength") First name is too short.
@@ -53,7 +52,7 @@ block layoutBody
                                 
                                 .form-group.has-success(ng-class="{ 'has-error' : profileForm.userSecurity.user.lastName.$invalid && !profileForm.userSecurity.user.lastName.$pristine }")
                                     label.col-lg-2.control-label(for="lastName") Last Name
-                                    div.col-lg-9
+                                    div.col-lg-5
                                         input.form-control(type="text" name="lastName" ng-model="userSecurity.user.lastName" ng-minlength="1" ng-maxlength="15"
                                         onkeypress="return !(event.charCode >= 47 && event.charCode <= 57)" placeholder="Enter Last Name")
                                         p.help-block(ng-show="profileForm.userSecurity.user.lastName.$error.minlength") Last name is too short.
@@ -61,22 +60,33 @@ block layoutBody
                                
                                .form-group.has-success(ng-class="{ 'has-error' : profileForm.userSecurity.user.middleName.$invalid && !profileForm.userSecurity.user.middleName.$pristine }")
                                     label.col-lg-2.control-label(for="middleName") Middle Name
-                                    div.col-lg-9
+                                    div.col-lg-5
                                         input.form-control(type="text" name="middleName" ng-model="userSecurity.user.middleName" ng-maxlength="15"
                                         onkeypress="return !(event.charCode >= 47 && event.charCode <= 57)" placeholder="Enter Middle Name")
                                         p.help-block(ng-show="profileForm.userSecurity.user.middleName.$error.maxlength") Last Name is too long.
-                                
                                 .form-group.has-success
                                     label.col-lg-2.control-label(for="birth") Birth
-                                    div.col-lg-9
-                                        div.input-group
-                                            input.form-control(type="text" uib-datepicker-popup ng-model="userSecurity.user.birth"
-                                            is-open="popup1.opened" datepicker-options="dateOptions" ng-required="false")
-                                            span.input-group-btn
-                                                button.btn.btn-large.btn-primary(ng-click="open1()")
-                                                    i.glyphicon.glyphicon-calendar
-
+                                    div.col-lg-2
+                                        input.form-control.input-md(type="date" date-parser="DD/MM/YYYY" ng-model="dateOfBirth" aria-describedby="sizing-addon3")
+                                    //-.form-group.has-success
+                                    //-    label.col-lg-2.control-label(for="birth") Birth
+                                    //-    div.col-lg-9
+                                    //-        div.input-group
+                                    //-           input.form-control(type="text" uib-datepicker-popup ng-model="userSecurity.user.birth"
+                                    //-            is-open="popup1.opened" datepicker-options="dateOptions" ng-required="false")
+                                    //-            span.input-group-btn
+                                    //-                button.btn.btn-large.btn-primary(ng-click="open1()")
+                                    //-                    i.glyphicon.glyphicon-calendar
                                 .form-group(style="margin-top: 5px;")
-                                        .col-md-offset-9.col-md-2
-                                            button.btn.btn-large.btn-primary.btn-block(type="submit", ng-click="updateUserProfile()") Update
-        
+                                        .col-md-offset-5.col-md-2
+                                            button.btn.btn-md.btn-primary.btn-block(type="submit", ng-click="updateUserProfile()") Update
+
+
+
+
+
+
+
+
+
+

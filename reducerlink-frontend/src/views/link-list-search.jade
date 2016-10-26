@@ -5,15 +5,15 @@ block layoutBody
         a(ui-sref="link-list-search") 
             .navbar.navbar-default.navbar-static-top(style="overflow-x: hidden;")
                 .container-fluid
-                    .navbar-header
+                    ul.nav.navbar-header
                         .span.navbar-brand Reducer Link
-                    .nav.navbar-nav.navbar-right
-                        .row
-                            li
-                                a(ng-click="reditectToSignup()")
-                                    span.glyphicon.glyphicon-user Signup &nbsp
-                                a(ng-click="reditectToLogin()")
-                                    span.glyphicon.glyphicon-log-in Login &nbsp
+                    ul.nav.navbar-nav.navbar-right
+                        .span.navbar-brand
+                            a(ng-click="reditectToSignup()")
+                                span.glyphicon.glyphicon-user Signup
+                        .span.navbar-brand
+                            a(ng-click="reditectToLogin()")
+                                span.glyphicon.glyphicon-log-in Login &nbsp
             .container-fluid
                 .row
                     .col-md-2
@@ -61,7 +61,7 @@ block layoutBody
                                         a(ng-click="increseClickNumber(linkWithTag.idLink)" href="{{ linkWithTag.urlShort }}") {{ linkWithTag.urlShort }}
                                     td {{ linkWithTag.tag }}
                                     td {{ linkWithTag.comment }}
-                                    td {{ linkWithTag.createdAtTimestamp | date: "yyyy-MM-dd" }}
+                                    td {{ linkWithTag.createdAtTimeTimestamp | date: "dd-MM-yyyy" }}
                                     td {{ linkWithTag.sumClick }}
                                     td
                                         a.span.glyphicon.glyphicon-question-sign(ng-click="authorInfo(linkWithTag.idUser)") 

@@ -5,13 +5,12 @@ block layoutBody
         a(ui-sref="user-link-edit") 
             .navbar.navbar-default.navbar-static-top(style="overflow-x: hidden;")
                 .container-fluid
-                    .navbar-header
+                    ul.nav.navbar-header
                         .span.navbar-brand Reducer Link
-                    .nav.navbar-nav.navbar-right
-                        .row
-                            li
-                                a(ng-click="logout()")
-                                    span.glyphicon.glyphicon-log-out Logout &nbsp
+                    ul.nav.navbar-nav.navbar-right
+                        .span.navbar-brand
+                            a(ng-click="logout()")
+                                span.glyphicon.glyphicon-log-out Logout &nbsp
             .container-fluid
                 .row
                     .col-md-2

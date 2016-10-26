@@ -4,6 +4,7 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
     var angular = AppService.angular;
 
     $scope.userPhoto = {};
+    $scope.dateOfBirth = new Date();
 
     $scope.token = {
         token: $state.params.token
@@ -22,7 +23,7 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
             firstName: "",
             lastName: "",
             middleName: "",
-            birth: 1477296578,
+            birth: "",
             status: "active"
         }
     };
@@ -51,8 +52,8 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
     };
 
     $scope.signup = function() {
+        $scope.userSecurity.user.birth = $scope.dateOfBirth.getTime();
         var userSecurityContext = angular.copy($scope.userSecurity);
-
         AppService.api(
             UserService.signup(userSecurityContext),
             function(response) {
@@ -138,7 +139,7 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
     };
 
     $scope.loadLinkForEdit = function() {
-        if ($scope.link.idLink !== undefined) {
+        if ($scope.link.idLink !== undefined && $scope.link.idLink !== "") {
             $scope.link = {
                 id: $scope.link.idLink,
                 tag: "",
@@ -196,7 +197,14 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
                 AppService.api(
                     UserService.getUserById($scope.idUser),
                     function(response) {
-                        $scope.userSecurity.user = response;
+                        $scope.userSecurity.user = {
+                            id: response.id,
+                            firstName: response.firstName,
+                            lastName: response.lastName,
+                            middleName: response.middleName,
+                            birth: ""
+                        };
+                        $scope.dateOfBirth = new Date(response.birth);
                     },
                     function(error) {
                         console.log("Error load");
@@ -224,6 +232,7 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
     };
 
     $scope.updateUserProfile = function() {
+        $scope.userSecurity.user.birth = $scope.dateOfBirth.getTime();
         AppService.api(
             UserService.updateUserById($scope.userSecurity.user),
             function(response) {
@@ -276,28 +285,16 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
         );
     };
 
-    $scope.today = function() {
-        $scope.birth = new Date();
-    };
-
-    $scope.today();
-
-    $scope.open1 = function() {
+    /*$scope.open1 = function() {
         $scope.popup1.opened = true;
     };
-
-    $scope.setDate = function(year, month, day) {
-        $scope.birth = new Date(year, month, day);
-    };
-
     $scope.dateOptions = {
         formatYear: "yy",
         startingDay: 1
     };
-
     $scope.popup1 = {
         opened: false
-    };
+    };*/
 };
 
 module.exports = ["$scope", "$state", "$window", "AppService", "UserService", UserController];

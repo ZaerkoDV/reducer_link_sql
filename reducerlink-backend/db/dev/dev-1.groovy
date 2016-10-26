@@ -50,14 +50,14 @@ databaseChangeLog(logicalFilePath: 'dev-1') {
 	changeSet id: '3', author: 'author', {
         insert tableName: 'user_photo', {
 		    column name: 'id', value: 1
-            column name: 'created_at_timestamp', value: 1468330444
+            column name: 'created_at_timestamp', value: 1288323623006
             column name: 'photo_data', value:''
 			column name: 'user_id', value: 1
         }
 		
 		insert tableName: 'user_photo', {
 		    column name: 'id', value: 2
-            column name: 'created_at_timestamp', value: 1468330053
+            column name: 'created_at_timestamp', value: 1288323623006
             column name: 'photo_data', value:''
 			column name: 'user_id', value: 2
         }
@@ -118,14 +118,14 @@ databaseChangeLog(logicalFilePath: 'dev-1') {
 	changeSet id: '6', author: 'author', {
         insert tableName: 'link_history', {
 		    column name: 'id', value: 1
-            column name: 'created_at_timestamp', value: 1468330053
+            column name: 'created_at_timestamp', value: 1288323623006
             column name: 'sum_click', value: 1
 			column name: 'link_id', value: 1
         }
 		
 		insert tableName: 'link_history', {
 		    column name: 'id', value: 2
-            column name: 'created_at_timestamp', value: 1468330043
+            column name: 'created_at_timestamp', value: 1288323623006
             column name: 'sum_click', value: 100
 			column name: 'link_id', value: 2
         }

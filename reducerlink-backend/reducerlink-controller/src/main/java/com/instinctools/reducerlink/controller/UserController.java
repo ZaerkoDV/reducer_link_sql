@@ -247,6 +247,11 @@ public class UserController extends BaseController {
         } catch (IOException e) {
             return buildError(ERROR_UPLOAD);
         }
+        //cheak if user have more then one photo
+        Long idUserPhoto = userPhotoService.getIdUserPhotoByIdUser(idUser);
+        if (idUserPhoto != null) {
+            userPhotoService.deleteUserPhoto(idUserPhoto);
+        }
 
         UserPhoto userPhoto = userPhotoService.saveUserPhoto(
             idUser,

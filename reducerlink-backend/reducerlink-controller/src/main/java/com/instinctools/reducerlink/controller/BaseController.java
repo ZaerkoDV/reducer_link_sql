@@ -134,6 +134,6 @@ public class BaseController {
     }
 
     protected long getCurrentTimestamp() {
-        return System.currentTimeMillis() / 1000L;
+        return System.currentTimeMillis();//  / 1000L
     }
 }

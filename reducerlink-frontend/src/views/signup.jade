@@ -30,15 +30,19 @@ block layoutBody
                                             input.form-control(type="text" name="middleName" ng-model="userSecurity.user.middleName" ng-maxlength="15"
                                             onkeypress="return !(event.charCode >= 47 && event.charCode <= 57)" placeholder="Enter Middle Name")
                                             p.help-block(ng-show="signupForm.userSecurity.user.middleName.$error.maxlength") Last Name is too long.
-                                    .form-group.has-success
+                                        //-.form-group.has-success
+                                        //-    label.col-lg-2.control-label(for="birth") Birth
+                                        //-    div.col-lg-9
+                                        //-         div.input-group
+                                        //-             input.form-control(type="text" uib-datepicker-popup ng-model="userSecurity.user.birth"
+                                        //-             is-open="popup1.opened" datepicker-options="dateOptions" ng-required="false")
+                                        //-             span.input-group-btn
+                                        //-                 button.btn.btn-large.btn-primary(ng-click="open1()")
+                                        //-                     i.glyphicon.glyphicon-calendar
+                                     .form-group.has-success
                                         label.col-lg-2.control-label(for="birth") Birth
-                                        div.col-lg-9
-                                            div.input-group
-                                                input.form-control(type="text" uib-datepicker-popup ng-model="userSecurity.user.birth"
-                                                is-open="popup1.opened" datepicker-options="dateOptions" ng-required="false")
-                                                span.input-group-btn
-                                                    button.btn.btn-large.btn-primary(ng-click="open1()")
-                                                        i.glyphicon.glyphicon-calendar
+                                        div.col-lg-4
+                                            input.form-control.input-md(type="date" date-parser="DD/MM/YYYY" ng-model="dateOfBirth" aria-describedby="sizing-addon3")
                                     .form-group.has-success(ng-class="{ 'has-error' : signupForm.userSecurity.login.$invalid && !signupForm.userSecurity.login.$pristine }")
                                         label.col-lg-2.control-label(for="login") Login
                                         div.col-lg-9
