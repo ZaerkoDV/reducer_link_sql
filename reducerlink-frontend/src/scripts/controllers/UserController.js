@@ -216,7 +216,7 @@ var UserController = function($scope, $state, $window, $cookies, AppService, Use
             }
         );
     };
-    /*на стр по пути не загружается фотка*/
+    /*user photo not load on page*/
     $scope.loadUserPhoto = function(idUser) {
         AppService.api(
             UserService.loadIdUserPhotoByIdUser(idUser),
