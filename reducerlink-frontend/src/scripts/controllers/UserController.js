@@ -1,13 +1,13 @@
 "use strict";
 
-var UserController = function($scope, $state, $window, AppService, UserService) {
+var UserController = function($scope, $state, $window, $cookies, AppService, UserService) {
     var angular = AppService.angular;
 
     $scope.userPhoto = {};
     $scope.dateOfBirth = new Date();
 
     $scope.token = {
-        token: $state.params.token
+        token: $cookies.get("token")
     };
 
     $scope.login = {
@@ -39,15 +39,15 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
     };
 
     $scope.redirectToUserLinkList = function() {
-        $state.go("user-link-list", { token: $scope.token.token });
+        $state.go("user-link-list");
     };
 
     $scope.reditectToLinkEdit = function(idLink) {
-        $state.go("user-link-edit", { token: $state.params.token, idLink: idLink });
+        $state.go("user-link-edit", { idLink: idLink });
     };
 
     $scope.redirectToEditProfile = function() {
-        $state.go("user-profile-edit", { token: $state.params.token });
+        $state.go("user-profile-edit");
         $scope.loadUserProfile();
     };
 
@@ -64,13 +64,14 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
             }
         );
     };
-
+    /*put tokin in cookies*/
     $scope.enterLogin = function() {
         var loginContext = angular.copy($scope.login);
         AppService.api(
             UserService.login(loginContext),
             function(response) {
-                $state.go("user-link-list", { token: response });
+                $state.go("user-link-list");
+                $cookies.put("token", response);
             },
             function(error) {
                 console.log("Error login");
@@ -83,7 +84,6 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
             UserService.logout($scope.token),
             function(response) {
                 $state.go("home");
-                console.log("Logout is success");
             },
             function(error) {
                 console.log("Logout is failed");
@@ -297,4 +297,4 @@ var UserController = function($scope, $state, $window, AppService, UserService) 
     };*/
 };
 
-module.exports = ["$scope", "$state", "$window", "AppService", "UserService", UserController];
+module.exports = ["$scope", "$state", "$window", "$cookies", "AppService", "UserService", UserController];
