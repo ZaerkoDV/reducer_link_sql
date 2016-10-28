@@ -1,7 +1,6 @@
 buildscript {
     ext {
         grettyVersion = '1.4.0'
-        mysqlConnectorVersion = '5.1.38'
         postgresqlConnectorVersion = '9.0-801.jdbc4'
         outputWarVersion = '0.0.1'
         springBootVersion = '1.3.3.RELEASE'
