@@ -58,3 +58,16 @@ task updateDev << {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.12'
 }
+
+/*
+gretty {
+    //other port
+    // http://stackoverflow.com/questions/35400903/how-can-i-run-apprunwar-in-a-port-other-than-the-one-defined-in-the-build-gradle
+    // http://akhikhl.github.io/gretty-doc/Gretty-configuration.html
+   jvmArgs = ['-Djava.net.preferIPv4Stack=true']
+}
+
+tasks.withType(JavaExec) {
+    systemProperty 'java.net.preferIPv4Stack', 'true'
+}
+*/
