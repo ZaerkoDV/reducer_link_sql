@@ -1,0 +1,30 @@
+Gretty грандл плагин- для запуска вебприл на  встраимоемых сервлетных контернерах. 
+
+Gretty is a feature-rich gradle plugin for running web-apps on embedded servlet containers. It supports Jetty versions 7, 8 and 9, Tomcat versions 7 and 8, multiple web-apps and many more. It wraps servlet container functions as convenient Gradle tasks and configuration DSL.
+
+ЗАПУСК
+
+1) Создаем схему в бд
+2) прописываем название схемы в пропертях
+3)  Обновить только структуру БД и основные данные:
+        Unix
+		./gradlew update
+		Windows:
+		gradlew.bat update
+	Обновить только структуру БД, основные данные, и добавить тестовые данные:
+	    Unix
+		./gradlew updateDev
+		Для Windows:
+		gradlew.bat updateDev
+4) импортируем в эклипс проект + билдим
+5) Для пуска в дебаге указываем параметры(см скрин) и пускаем через обычный дебаг
+5) Для развертывания на боевом сервере на 8080 порту в консоли
+	gradlew.bat jettyRunDebug
+	gradlew.bat tomcatRunDebug
+	
+6) собираем фронт npm i
+7 Запускаем на 8082
+   npm i
+   npm run gulp
+   gulp watch
+
